@@ -26,6 +26,7 @@ jobs:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           VITE_PIXABAY_URL: ${{ secrets.VITE_PIXABAY_URL }}
           VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
