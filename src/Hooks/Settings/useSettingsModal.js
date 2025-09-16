@@ -134,7 +134,7 @@ export const useSettingsModal = () => {
         }
 
         try {
-            const response = await apiCall(`/api/account/checkusername/${currentUsername}`, "GET");
+            const response = await apiCall(`/account/checkusername/${currentUsername}`, "GET");
             if (response.is_available) {
                 console.log("Username is available! ✅");
                 setUsernameUpdateError(null)
@@ -170,7 +170,7 @@ export const useSettingsModal = () => {
         setIsUsernameUpdated(false);
 
         try {
-            const response = await apiCall("/api/account", "PUT", {
+            const response = await apiCall("/account", "PUT", {
                 userId: user.userId,
                 username: username,
             });
@@ -213,7 +213,7 @@ export const useSettingsModal = () => {
         setIsPasswordUpdated(false);
 
         try {
-            const response = await apiCall("/api/account", "PUT", {
+            const response = await apiCall("/account", "PUT", {
                 userId: user.userId,
                 password: password,
             });
@@ -256,7 +256,7 @@ export const useSettingsModal = () => {
                 throw new Error("Image upload failed. Please try again.");
             }
 
-            const response = await apiCall("/api/account", "PUT", {
+            const response = await apiCall("/account", "PUT", {
                 userId: user.userId,
                 image: imageUrl
             });

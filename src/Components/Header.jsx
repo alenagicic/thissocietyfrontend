@@ -17,7 +17,7 @@ export default function Header() {
   const handleAction = async (actionType) => {
     if (actionType === 'signout') {
       try {
-        await apiCall('/api/account/signout', 'POST');
+        await apiCall('/account/signout', 'POST');
         logout();
       } catch (error) {
         console.error('Error signing out:', error.message || error);

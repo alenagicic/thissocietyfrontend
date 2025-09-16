@@ -39,7 +39,7 @@ export const useCreateArticleModal = () => {
                 author_primary_id: user.userId,
             };
 
-            const result = await apiCall("/api/articles", "POST", payload);
+            const result = await apiCall("/articles", "POST", payload);
             console.log("Article posted successfully!");
             return result;
         } catch (err) {

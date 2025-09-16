@@ -65,7 +65,7 @@ export const useAuthModal = () => {
         setIsLoading(true);
         setPasswordErrors([]);
         try {
-            const response = await apiCall("/api/account/signin", "POST", { email, password });
+            const response = await apiCall("/account/signin", "POST", { email, password });
             if (response?.user) {
                 login(response.user);
                 handleCloseAuthModal();
@@ -89,7 +89,7 @@ export const useAuthModal = () => {
 
         setIsLoading(true);
         try {
-            const response = await apiCall("/api/account/signup", "POST", { email, password });
+            const response = await apiCall("/account/signup", "POST", { email, password });
             if (response?.userId) {
                 login(response);
                 handleCloseAuthModal();
@@ -107,7 +107,7 @@ export const useAuthModal = () => {
     const handleSignout = async () => {
         setIsLoading(true);
         try {
-            await apiCall("/api/account/signout", "POST");
+            await apiCall("/account/signout", "POST");
             logout();
         } catch (error) {
             console.error("Error signing out:", error.message || error);

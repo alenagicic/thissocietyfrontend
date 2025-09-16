@@ -18,7 +18,7 @@ export default function ContentPresenter({ list }) {
         const fetchAuthorData = async () => {
             if (list && list.length > 0) {
                 try {
-                    let req = await getRequest(`/api/account?userId=${list[0].AuthorPrimaryId}`);
+                    let req = await getRequest(`/account?userId=${list[0].AuthorPrimaryId}`);
                     console.log(req);
                     setHeaderText(req.data.username);
                 } catch (error) {
