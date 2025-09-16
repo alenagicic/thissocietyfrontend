@@ -15,6 +15,7 @@ dist-ssr
 
 # Environment variables
 .env
+.env.production
 cert.pem
 key.pem
 

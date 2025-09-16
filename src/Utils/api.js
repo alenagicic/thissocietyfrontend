@@ -1,5 +1,10 @@
-
 const apiKey = import.meta.env.VITE_API_KEY;
+const apiBaseUrl = import.meta.env.VITE_API_URL;
+
+// Use the Vite proxy in development, otherwise use the full API URL.
+const getApiUrl = (path) => {
+    return import.meta.env.DEV ? `/api${path}` : `${apiBaseUrl}${path}`;
+};
 
 const createHeaders = () => ({
     "x-api-key": apiKey,
@@ -8,7 +13,7 @@ const createHeaders = () => ({
 
 export const postCommentToBackend = async ({ articleId, userId, content, parentId = null, image, userPrimaryId }) => {
     try {
-        const response = await fetch(`/api/articles/${articleId}/comment`, {
+        const response = await fetch(getApiUrl(`/articles/${articleId}/comment`), {
             method: "POST",
             headers: createHeaders(),
             body: JSON.stringify({
@@ -42,7 +47,7 @@ export const postRatingToBackendTopic = async (articleId, typeRating) => {
         default: console.warn("Invalid typeRating passed to postRatingToBackendTopic"); return null;
     }
     try {
-        const response = await fetch(`/api/articles/${articleId}`, {
+        const response = await fetch(getApiUrl(`/articles/${articleId}`), {
             method: "PUT",
             headers: createHeaders(),
             body: JSON.stringify(body),
@@ -62,7 +67,7 @@ export const postCommentCountToBackend = async (articleId, commentCountChange) =
     }
     const body = { article_id: articleId, amountcomment: commentCountChange };
     try {
-        const response = await fetch(`/api/articles/${articleId}`, {
+        const response = await fetch(getApiUrl(`/articles/${articleId}`), {
             method: "PUT",
             headers: createHeaders(),
             body: JSON.stringify(body),
@@ -85,7 +90,7 @@ export const postRatingCommentToBackend = async ({ articleId, commentId, typeRat
             case "upvote-undo": body.upvote = -1; break;
             default: console.warn("Invalid typeRating passed to postRatingCommentToBackend"); return false;
         }
-        const result = await fetch(`/api/articles/${articleId}/comment/${commentId}`, {
+        const result = await fetch(getApiUrl(`/articles/${articleId}/comment/${commentId}`), {
             method: "PUT",
             headers: createHeaders(),
             body: JSON.stringify(body)
@@ -99,7 +104,7 @@ export const postRatingCommentToBackend = async ({ articleId, commentId, typeRat
 
 export const fetchArticles = async (pageSize = 10, lastEvaluatedKey = null, tag = null) => {
     try {
-        let url = `/api/articles?pageSize=${pageSize}`;
+        let url = getApiUrl(`/articles?pageSize=${pageSize}`);
         if (lastEvaluatedKey) {
             url += `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastEvaluatedKey))}`;
         }
@@ -125,7 +130,7 @@ export const fetchArticles = async (pageSize = 10, lastEvaluatedKey = null, tag 
 
 export const fetchLatestCommentApi = async (itemId) => {
     try {
-        const response = await fetch(`/api/articles/${itemId}/comment/latest`, {
+        const response = await fetch(getApiUrl(`/articles/${itemId}/comment/latest`), {
             method: "GET",
             headers: createHeaders(),
         });
@@ -140,7 +145,7 @@ export const fetchLatestCommentApi = async (itemId) => {
 
 export const fetchCommentsApi = async (articleId) => {
     try {
-        const res = await fetch(`/api/articles/${articleId}/comment`, {
+        const res = await fetch(getApiUrl(`/articles/${articleId}/comment`), {
             headers: createHeaders(),
         });
         const result = await res.json();
@@ -160,7 +165,7 @@ export const apiCall = async (endpoint, method, body = null) => {
     const headers = createHeaders();
     const config = { method, headers, credentials: "include" };
     if (body) config.body = JSON.stringify(body);
-    const response = await fetch(endpoint, config);
+    const response = await fetch(getApiUrl(endpoint), config);
     const data = await response.json();
     console.log(data)
     if (!response.ok) {
@@ -174,7 +179,7 @@ export const uploadImageToS3 = async (file) => {
         const { default: imageCompression } = await import('browser-image-compression');
         const compressedFile = await imageCompression(file, { maxSizeMB: 0.5, maxWidthOrHeight: 1024, useWebWorker: true });
         const uniqueFileName = `${file.name.replace(/\.[^/.]+$/, "")}-${Date.now()}-${Math.floor(Math.random() * 10000)}.${compressedFile.name.split('.').pop()}`;
-        const { upload_url, public_url } = await apiCall(`/api/articles/presignedurl?file_name=${uniqueFileName}`, "GET");
+        const { upload_url, public_url } = await apiCall(`/articles/presignedurl?file_name=${uniqueFileName}`, "GET");
         await fetch(upload_url, { method: "PUT", headers: { "Content-Type": compressedFile.type }, body: compressedFile });
         return public_url;
     } catch (err) {
@@ -185,7 +190,7 @@ export const uploadImageToS3 = async (file) => {
 
 export const createNotification = async (authorPrimaryId, message, article_id, comment_id) => {
     try {
-        const response = await fetch(`/api/users/${authorPrimaryId}/notifications`, {
+        const response = await fetch(getApiUrl(`/users/${authorPrimaryId}/notifications`), {
             method: "POST",
             headers: createHeaders(),
             body: JSON.stringify({
@@ -205,7 +210,7 @@ export const createNotification = async (authorPrimaryId, message, article_id, c
 
 export const fetchNotifications = async (userId, lastKnownKey = null) => {
     try {
-        const url = new URL(`/api/users/${userId}/notifications`, window.location.origin);
+        const url = new URL(getApiUrl(`/users/${userId}/notifications`));
 
         if (lastKnownKey) {
             url.searchParams.append('last_known_key', JSON.stringify(lastKnownKey));
@@ -232,7 +237,7 @@ export const fetchNotifications = async (userId, lastKnownKey = null) => {
 export const markNotificationAsRead = async (userId, notificationSk) => {
     try {
         const encodedSK = encodeURIComponent(notificationSk);
-        const response = await fetch(`/api/users/${userId}/notifications/${encodedSK}`, {
+        const response = await fetch(getApiUrl(`/users/${userId}/notifications/${encodedSK}`), {
             method: "PUT",
             headers: createHeaders(),
         });
@@ -245,7 +250,7 @@ export const markNotificationAsRead = async (userId, notificationSk) => {
 };
 
 export const fetchSingleArticle = async (articleId) => {
-    const request = await fetch(`/api/articles/${articleId}`, {
+    const request = await fetch(getApiUrl(`/articles/${articleId}`), {
         method: "GET",
         headers: createHeaders(),
     });
@@ -256,7 +261,7 @@ export const fetchSingleArticle = async (articleId) => {
 };
 
 export const fetchOnTagPath = async (value) => {
-    return await fetch(`/api/articles/tags/suggestions?prefix=${value}`, {
+    return await fetch(getApiUrl(`/articles/tags/suggestions?prefix=${value}`), {
         method: "GET",
         headers: {
             "x-api-key": apiKey,
@@ -266,7 +271,7 @@ export const fetchOnTagPath = async (value) => {
 }
 
 export const fetchAuthUser = async () => {
-    return await fetch(`/api/account/checkuser`, {
+    return await fetch(getApiUrl(`/account/checkuser`), {
         credentials: "include",
         headers: {
             "x-api-key": apiKey
@@ -277,7 +282,7 @@ export const fetchAuthUser = async () => {
 export const fetchArticlesByAuthor = async (author_id, startKey) => {
 
     try {
-        const url = new URL(`/api/articles/byauthor`, window.location.origin);
+        const url = new URL(getApiUrl(`/articles/byauthor`));
         url.searchParams.append('author_id', author_id);
         
         if (startKey) {
@@ -310,7 +315,7 @@ export const fetchArticlesByAuthor = async (author_id, startKey) => {
 
 export const fetchUserId = async (author_id) => {
     try {
-        const request = await fetch(`/api/account/lookupid/${author_id}`, {
+        const request = await fetch(getApiUrl(`/account/lookupid/${author_id}`), {
             method: "GET",
             headers: {
                 "x-api-key": apiKey,
@@ -334,37 +339,37 @@ export const fetchUserId = async (author_id) => {
 }
 
 export const fetchSuggestions = async (endpoint) => {
-    try {
-        const response = await fetch(`/api/${endpoint}`, {
-            method: "GET",
-            headers: {
+    try {
+        const response = await fetch(getApiUrl(`/${endpoint}`), {
+            method: "GET",
+            headers: {
                 "x-api-key": apiKey,
                 "Content-Type": "application/json"
             }
-        });
+        });
 
         console.log(response)
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-        const data = await response.json();
+        const data = await response.json();
 
         console.log(data)
-        return data;
+        return data;
 
-    } catch (error) {
-        console.error("Error fetching suggestions:", error);
-        return [];
-    }
+    } catch (error) {
+        console.error("Error fetching suggestions:", error);
+        return [];
+    }
 };
 
 export const getRequest = async (endpoint) => {
     try {
         const headers = createHeaders();
         
-        const response = await fetch(endpoint, {
+        const response = await fetch(getApiUrl(`/${endpoint}`), {
             method: "GET",
             headers: headers
         });
