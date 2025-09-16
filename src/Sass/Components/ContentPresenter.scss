@@ -1,0 +1,19 @@
+.wrapper-content-presenter{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    align-items: center;
+
+    .author-title{
+        position: sticky;
+        top: 3.5rem;
+        background-color: #2ecc71;
+        color: white;
+        padding: 0.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-radius: 1rem;
+        z-index: 100;
+        text-transform: capitalize;
+    }
+}

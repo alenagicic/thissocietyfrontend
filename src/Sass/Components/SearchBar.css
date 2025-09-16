@@ -1,0 +1,170 @@
+.mainsearchpage-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+  max-width: 35rem;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+}
+.mainsearchpage-nav .custom-dropdown-container {
+  position: relative;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #ddd;
+  height: 3rem;
+  width: 8rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 2;
+}
+.mainsearchpage-nav .custom-dropdown-container .selected-value {
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 0.5rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.mainsearchpage-nav .custom-dropdown-container .selected-value i {
+  padding-top: 0.25rem;
+  font-size: 0.9rem;
+}
+.mainsearchpage-nav .dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: white;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.mainsearchpage-nav .dropdown-menu .dropdown-option {
+  padding: 0.75rem 1rem;
+  color: #333;
+  cursor: pointer;
+}
+.mainsearchpage-nav .dropdown-menu .dropdown-option:hover {
+  background-color: #f0f0f0;
+}
+.mainsearchpage-nav .search-form {
+  border: 1px solid #ddd;
+  position: relative;
+  flex-grow: 1;
+  background-color: white;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+}
+.mainsearchpage-nav .search-form .search-input {
+  flex: 1;
+  padding-left: 1rem;
+  border: none;
+  color: #333;
+  font-size: 1rem;
+  width: auto;
+}
+.mainsearchpage-nav .search-form .search-input:focus {
+  border: none;
+  outline: none;
+}
+.mainsearchpage-nav .search-form .search-input::-moz-placeholder {
+  font-size: 1rem;
+  color: inherit;
+}
+.mainsearchpage-nav .search-form .search-input::placeholder {
+  font-size: 1rem;
+  color: inherit;
+}
+.mainsearchpage-nav .search-form .tag-dropdown-panel, .mainsearchpage-nav .search-form .author-dropdown-panel {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  z-index: 999;
+  top: 110%;
+  border: 1px solid #eee;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.mainsearchpage-nav .search-form .tag-suggestion-item, .mainsearchpage-nav .search-form .author-suggestion-item {
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  padding-right: 0.3rem;
+  box-sizing: border-box;
+  padding-left: 0.5rem;
+}
+.mainsearchpage-nav .search-form .tag-suggestion-item.highlighted, .mainsearchpage-nav .search-form .tag-suggestion-item:hover, .mainsearchpage-nav .search-form .author-suggestion-item.highlighted, .mainsearchpage-nav .search-form .author-suggestion-item:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+.mainsearchpage-nav .search-container {
+  width: 100%;
+  display: flex;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+  margin-bottom: 1rem;
+}
+.mainsearchpage-nav .search-toggle-button {
+  position: fixed;
+  right: 1.2rem;
+  top: 4.5rem;
+  min-width: 3rem;
+  min-height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  color: white;
+  border: 1px solid transparent;
+  background-color: #2ecc71;
+  box-sizing: border-box;
+}
+.mainsearchpage-nav .search-toggle-button:hover {
+  transition: all 0.3s ease;
+  transform: scale(1.05);
+  transform-origin: center;
+  border: 1px solid #2ecc71;
+}
+.mainsearchpage-nav .search-toggle-button:focus {
+  transform: scale(1);
+}
+.mainsearchpage-nav .search-toggle-button i {
+  font-size: 1.6rem;
+}
+
+@media screen and (max-width: 740px) {
+  .mainsearchpage-nav {
+    margin: 0px;
+    padding: 0px;
+    flex-direction: column; /* Stacks items vertically on small screens */
+    align-items: stretch; /* Makes items fill the full width */
+    min-width: unset; /* Ensures it can shrink */
+  }
+  .search-form {
+    width: auto; /* Ensures the search form takes up the full width */
+  }
+  .custom-dropdown-container {
+    width: 100%; /* Ensures the dropdown takes up the full width */
+  }
+  .search-toggle-button {
+    min-width: auto;
+  }
+}

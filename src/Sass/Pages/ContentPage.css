@@ -1,0 +1,17 @@
+.wrapper-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.wrapper-link-content {
+  margin: 0px;
+  padding: 0px;
+  text-decoration: none;
+}
+
+.load-more-btn-content {
+  min-width: 10rem;
+  margin-left: auto;
+  margin-right: auto;
+}
