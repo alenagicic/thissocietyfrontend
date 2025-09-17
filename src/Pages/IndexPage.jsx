@@ -47,7 +47,6 @@ export default function IndexPage() {
         <>
             <main className="wrapper-index">
                 <section>
-                    <h2 style={{marginBottom: "1rem"}}>Latest Articles</h2>
                     <div className="index-wrapper-latest">
                         {articlesToDisplay.length > 0 ? (
                             articlesToDisplay.map((item) => (

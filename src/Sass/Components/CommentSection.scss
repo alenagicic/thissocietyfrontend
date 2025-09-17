@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     user-select: none;
-    padding-bottom: 5rem;
+    padding-bottom: 8rem;
 
     .wrapper-comments-main {
         display: flex;
@@ -210,6 +210,28 @@
                     width: 100%;
                 }
 
+            }
+
+            @media screen and (max-width: 780px){
+                .wrapper-commentbox{
+                    all: unset;
+                    position: fixed;
+                    bottom: 0px;
+                    left: 0px;
+                    right: 0px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    padding: 1rem;
+                    width: 100%;
+                    background-color: whitesmoke;
+                    z-index: 100;
+
+                    .wrapper-commentbox-tools{
+                        width: 100vw;
+                        max-width: 100%;
+                        column-gap: 0.3rem;
+                        padding: 0px;
+                    }
+                }
             }
 
             .wrapper-comment-username {

@@ -143,6 +143,12 @@
   -o-object-fit: cover;
      object-fit: cover;
 }
+@media screen and (max-width: 390px) {
+  .wrapper-create .tab-menu .tab-content .tab-pane#account-settings .form-section .profile-image-section .image-preview-container {
+    width: 260px;
+    height: 260px;
+  }
+}
 .wrapper-create .tab-menu .tab-content .tab-pane#account-settings .form-section .profile-image-section label {
   background: #2ecc71;
   color: white;
@@ -222,6 +228,7 @@
   border-radius: 2px;
   cursor: pointer;
   width: 20%;
+  min-width: 10rem;
   min-height: 2rem;
   font-size: 1.05rem;
   margin-left: auto;

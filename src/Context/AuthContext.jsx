@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import {fetchAuthUser} from '../Utils/api'
+import { fetchAuthUser } from '../Utils/api';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = React.createContext();
 
@@ -7,12 +8,12 @@ const apiKey = import.meta.env.VITE_API_KEY;
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = React.useState(null);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
-
     const checkUserStatus = async () => {
       try {
-        const res = await fetchAuthUser()
+        const res = await fetchAuthUser();
 
         if (!res.ok) { 
           let errorData = {};
@@ -29,9 +30,7 @@ export default function AuthProvider({ children }) {
         }
 
         const data = await res.json(); 
-        
         setUser(data.user);       
-        
       } catch (error) {
         console.error("Fetch or processing error:", error);
         setUser(null);
@@ -42,7 +41,11 @@ export default function AuthProvider({ children }) {
   }, []);
 
   const login = (userData) => setUser(userData);
-  const logout = () => setUser(null);
+
+  const logout = () => {
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>

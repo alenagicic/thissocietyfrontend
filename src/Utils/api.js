@@ -167,7 +167,7 @@ export const apiCall = async (endpoint, method, body = null) => {
     if (body) config.body = JSON.stringify(body);
     const response = await fetch(getApiUrl(endpoint), config);
     const data = await response.json();
-    console.log(data)
+    
     if (!response.ok) {
         throw new Error(data.error || `API call to ${endpoint} failed with status ${response.status}`);
     }
@@ -210,13 +210,14 @@ export const createNotification = async (authorPrimaryId, message, article_id, c
 
 export const fetchNotifications = async (userId, lastKnownKey = null) => {
     try {
-        const url = new URL(getApiUrl(`/users/${userId}/notifications`));
+        let url = getApiUrl(`/users/${userId}/notifications`);
 
         if (lastKnownKey) {
-            url.searchParams.append('last_known_key', JSON.stringify(lastKnownKey));
+            const encodedKey = encodeURIComponent(JSON.stringify(lastKnownKey));
+            url += `?last_known_key=${encodedKey}`;
         }
 
-        const response = await fetch(url.toString(), {
+        const response = await fetch(url, {
             method: 'GET',
             headers: createHeaders(),
         });
@@ -280,18 +281,26 @@ export const fetchAuthUser = async () => {
 }
 
 export const fetchArticlesByAuthor = async (author_id, startKey) => {
-
     try {
-        const url = new URL(getApiUrl(`/articles/byauthor`));
-        url.searchParams.append('author_id', author_id);
+        // Construct the base path, which can be relative or absolute.
+        const path = getApiUrl(`/articles/byauthor`);
+        
+        // Use URLSearchParams to build and encode the query string.
+        const searchParams = new URLSearchParams();
+        searchParams.append('author_id', author_id);
         
         if (startKey) {
+            // Correctly stringify and encode the last evaluated key.
             const jsonKey = JSON.stringify(startKey);
             const encodedKey = encodeURIComponent(jsonKey);
-            url.searchParams.append('last_evaluated_key', encodedKey);
+            searchParams.append('last_evaluated_key', encodedKey);
         }
 
-        const request = await fetch(url.toString(), {
+        // Concatenate the path and the encoded search parameters.
+        const fullUrl = `${path}?${searchParams.toString()}`;
+
+        // Pass the full URL string to fetch().
+        const request = await fetch(fullUrl, {
             method: "GET",
             headers: {
                 "x-api-key": apiKey,
@@ -348,15 +357,12 @@ export const fetchSuggestions = async (endpoint) => {
             }
         });
 
-        console.log(response)
-
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
 
-        console.log(data)
         return data;
 
     } catch (error) {

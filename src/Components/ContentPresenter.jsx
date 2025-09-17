@@ -19,7 +19,7 @@ export default function ContentPresenter({ list }) {
             if (list && list.length > 0) {
                 try {
                     let req = await getRequest(`/account?userId=${list[0].AuthorPrimaryId}`);
-                    console.log(req);
+                    
                     setHeaderText(req.data.username);
                 } catch (error) {
                     console.error("Error fetching user data:", error);

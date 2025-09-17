@@ -208,8 +208,8 @@ export default function Search() {
                         ref={dropdownRef}
                     >
                         <div className='selected-value'>
-                            {filterType.charAt(0).toUpperCase() + filterType.slice(1)}
-                            <i className={`bi bi-chevron-${dropdownOpen ? 'up' : 'down'}`}></i>
+                            {filterType === 'author' && <i className="bi bi-person"></i>}
+                            {filterType === 'tag' && <i className="bi bi-tag"></i>}
                         </div>
                         {dropdownOpen && (
                             <div className='dropdown-menu'>
@@ -217,13 +217,13 @@ export default function Search() {
                                     className='dropdown-option'
                                     onClick={() => handleOptionClick('author')}
                                 >
-                                    Author
+                                    <i className="bi bi-person"></i>
                                 </div>
                                 <div
                                     className='dropdown-option'
                                     onClick={() => handleOptionClick('tag')}
                                 >
-                                    Tag
+                                    <i className="bi bi-tag"></i>
                                 </div>
                             </div>
                         )}

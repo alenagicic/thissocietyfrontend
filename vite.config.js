@@ -5,7 +5,7 @@ import mkcert from 'vite-plugin-mkcert';
 export default defineConfig({
   plugins: [react(), mkcert()],
   server: {
-    https: true, // Simply enable HTTPS
+    https: true,
     proxy: {
       '/api': {
         target: 'https://vmxmjjenz4.execute-api.eu-north-1.amazonaws.com/Prod',

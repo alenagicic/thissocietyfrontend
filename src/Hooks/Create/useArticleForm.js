@@ -57,7 +57,7 @@ export const useArticleForm = ({ postArticleWithImages, selectedImages }) => {
         try {
             const result = await postArticleWithImages(content, article.heading, article.description, article.tags, selectedImages);
             if (result) {
-                console.log(result);
+                
                 if (onSuccess) {
                     onSuccess();
                     navigate("/content/main/latest")

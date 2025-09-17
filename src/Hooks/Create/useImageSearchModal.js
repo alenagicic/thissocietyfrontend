@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { uploadImageToS3 } from "../../Utils/api";
 
-const PEXELS_API_KEY = import.meta.env.PEXELS_API_KEY
+const PEXELS_API_KEY = import.meta.env.VITE_PEXELS_API_KEY
 
 const debounce = (func, delay) => {
     let timeout;

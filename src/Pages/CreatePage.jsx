@@ -108,7 +108,7 @@ export default function CreatePage() {
             )}
 
             <h3 style={{paddingLeft: '0.1rem'}}>
-                <i class="bi bi-journal"></i> Contribute
+                <i className="bi bi-journal"></i> Contribute
             </h3>
 
             <div className="wrapper-create">

@@ -20,7 +20,6 @@ export default function ArticleView() {
     const [hasUpvoted, setHasUpvoted] = useState(false);
     const [hasDownvoted, setHasDownvoted] = useState(false);
     const [imgpresent, imgpresentset] = useState(false);
-    // State variables for local vote counts
     const [localUpvotes, setLocalUpvotes] = useState(0);
     const [localDownvotes, setLocalDownvotes] = useState(0);
 
@@ -130,7 +129,7 @@ export default function ArticleView() {
 
     if (isLoading || showLoader) {
         return (
-            <div className="popup-box wrapper-loadingscreen">
+            <div className="popup popup-loading">
                 <div className="spinner"></div>
             </div>
         );
@@ -138,33 +137,33 @@ export default function ArticleView() {
 
     if (error || !article) {
         return (
-            <div className="popup-box wrapper-loadingscreen">
+            <div className="popup popup-loading">
                 <p>{error || "Article not found."}</p>
-                <button onClick={handleClose} className="close-button">Back</button>
+                <button onClick={handleClose} className="popup-header__close-btn">Back</button>
             </div>
         );
     }
 
     return (
-        <div className="popup-box">
+        <div className="popup">
             <div className="popup-content">
                 {imgpresent && (
-                    <div className="popup-topic-img">
+                    <div className="popup-image-carousel">
                         {showNavigation && (
                             <i
                                 onClick={handleLeftClick}
-                                className={`bi bi-chevron-left ${!canGoLeft ? "disabled" : ""}`}
+                                className={`bi bi-chevron-left popup-image-carousel__nav popup-image-carousel__nav--left ${!canGoLeft ? "disabled" : ""}`}
                             ></i>
                         )}
                         {currentImages.map((img, idx) => (
                             <div
                                 key={img}
-                                className={`popup-topic-img-item img-count-${
+                                className={`popup-image-carousel__item popup-image-carousel__item--count-${
                                     article.image_links.length <= 3 ? article.image_links.length : 3
                                 }`}
                             >
                                 <img
-                                    className="slide-in-image"
+                                    className="popup-image-carousel__item-img slide-in-image"
                                     src={img}
                                     alt={`popup-img-${idx}`}
                                     onClick={() => window.open(img, "_blank")}
@@ -175,68 +174,70 @@ export default function ArticleView() {
                         {showNavigation && (
                             <i
                                 onClick={handleRightClick}
-                                className={`bi bi-chevron-right ${!canGoRight ? "disabled" : ""}`}
+                                className={`bi bi-chevron-right popup-image-carousel__nav popup-image-carousel__nav--right ${!canGoRight ? "disabled" : ""}`}
                             ></i>
                         )}
                     </div>
                 )}
 
-                <header className="popup-title">
-                    <h1>{article.heading}</h1>
+                <header className="popup-header">
+                    <h1 className="popup-header__title">{article.heading}</h1>
                     {location.state?.modal ? (
-                        <button onClick={handleClose} className="popup-close">Back</button>
+                        <button onClick={handleClose} className="popup-header__close-btn">Back</button>
                     ) : (
-                        <button onClick={() => navigate(-1)} className="popup-close">Back</button>
+                        <button onClick={() => navigate(-1)} className="popup-header__close-btn">Back</button>
                     )}
                 </header>
 
-                <div className="popup-topic">
+                <div className="popup-article">
                     <div
-                        className="wrapper-topic-content-text"
+                        className="popup-article__content"
                         dangerouslySetInnerHTML={{
                             __html: DOMPurify.sanitize(article.content),
                         }}
                     />
                 </div>
 
-                <div className="popup-upvotes">
-                    <div className="popup-author">
-                        <div className="wrapper-img-author">
-                            <img src={article.author_img || image} alt="" />
+                <div className="popup-meta">
+                    <div className="popup-meta__author">
+                        <div className="popup-meta__author-img-wrapper">
+                            <img src={article.author_img || image} alt="" className="popup-meta__author-img" />
                         </div>
-                        <div className="author-name" onClick={() => handleAuthorClick(article.author_primary_id)}>
+                        <div className="popup-meta__author-name" onClick={() => handleAuthorClick(article.author_primary_id)}>
                             @{article.author_id}
                         </div>
                     </div>
-                    <div className="popup-date">
-                        <i className="bi bi-clock"></i> {formatTimeAgo(article.created_at)}
-                    </div>
-                    <div
-                        onClick={handleUpvote}
-                        className={`wrapper-upvotes upvote ${hasUpvoted ? "active" : ""}`}
-                        role="button"
-                        tabIndex={0}
-                    >
-                        <i className={`bi ${hasUpvoted ? "bi-hand-thumbs-up-fill" : "bi-hand-thumbs-up"}`}></i>
-                        {localUpvotes > 0 && <span>{localUpvotes}</span>}
-                    </div>
-                    <div
-                        onClick={handleDownvote}
-                        className={`wrapper-upvotes downvote ${hasDownvoted ? "active" : ""}`}
-                        role="button"
-                        tabIndex={0}
-                    >
-                        <i className={`bi ${hasDownvoted ? "bi-hand-thumbs-down-fill" : "bi-hand-thumbs-down"}`}></i>
-                        {localDownvotes > 0 && <span>{localDownvotes}</span>}
-                    </div>
-                    <div
-                        className="share-btn"
-                        onClick={() => handleShare(article.heading, window.location.href)}
-                        style={{ cursor: "pointer" }}
-                        role="button"
-                        tabIndex={0}
-                    >
-                        <i className="bi bi-share"></i>
+                    <div className="popup-meta-wrapper">
+                        <div className="popup-meta__date">
+                            <i className="bi bi-clock popup-meta__date-icon"></i> {formatTimeAgo(article.created_at)}
+                        </div>
+                        <div
+                            onClick={handleUpvote}
+                            className={`popup-meta__vote-wrapper popup-meta__upvote ${hasUpvoted ? "popup-meta__vote-wrapper--active" : ""}`}
+                            role="button"
+                            tabIndex={0}
+                        >
+                            <i className={`bi ${hasUpvoted ? "bi-arrow-up-circle-fill" : "bi-arrow-up-circle"} popup-meta__vote-icon`}></i>
+                            {localUpvotes > 0 && <span>{localUpvotes}</span>}
+                        </div>
+                        <div
+                            onClick={handleDownvote}
+                            className={`popup-meta__vote-wrapper popup-meta__downvote ${hasDownvoted ? "popup-meta__vote-wrapper--active" : ""}`}
+                            role="button"
+                            tabIndex={0}
+                        >
+                            <i className={`bi ${hasDownvoted ? "bi-arrow-down-circle-fill" : "bi-arrow-down-circle"} popup-meta__vote-icon`}></i>
+                            {localDownvotes > 0 && <span>{localDownvotes}</span>}
+                        </div>
+                        <div
+                            className="popup-meta__share-btn"
+                            onClick={() => handleShare(article.heading, window.location.href)}
+                            style={{ cursor: "pointer" }}
+                            role="button"
+                            tabIndex={0}
+                        >
+                            <i className="bi bi-share popup-meta__share-btn-icon"></i>
+                        </div>
                     </div>
                 </div>
 
@@ -245,6 +246,7 @@ export default function ArticleView() {
                         article={article}
                     />
                 </div>
+
             </div>
         </div>
     );

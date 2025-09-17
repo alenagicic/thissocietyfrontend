@@ -80,7 +80,7 @@ export default function CommentSection({ article }) {
                 <textarea
                     rows={1}
                     onInput={(e) => autoGrow(e.target)}
-                    placeholder="Write a comment"
+                    placeholder="Comment"
                     ref={textareaRef}
                     name="commentbox"
                     id="commentbox"

@@ -63,9 +63,9 @@ export function formatTimeAgo(timestamp) {
     if (diffInSeconds < 60) {
         return "just now";
     } else if (minutes < 60) {
-        return `${minutes} minute${minutes > 1 ? 's' : ''}`;
+        return `${minutes} min${minutes > 1 ? '' : ''}`;
     } else if (hours < 24) {
-        return `${hours} hour${hours > 1 ? 's' : ''}`;
+        return `${hours} h${hours > 1 ? '' : ''}`;
     } else if (days < 30) {
         return `${days} day${days > 1 ? 's' : ''}`;
     } else if (months < 12) {

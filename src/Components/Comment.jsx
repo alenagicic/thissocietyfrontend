@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useContext } from "react";
 import image from "../Images/vite.svg";
 import { formatTimeAgo, autoGrow } from "../Utils/helpers";
 import { useCommentVoting } from "../Hooks/Content/useCommentVoting";
-import { useShareFeature } from "../Hooks/Content/useShareFeature";
 import { AuthContext } from "../Context/AuthContext";
 import IconPicker from "./IconPicker";
 import { Link } from 'react-router-dom';
@@ -25,17 +24,14 @@ export default function Comment({
   
   const textareaRef = useRef(null);
   const actualCommentRef = useRef(null);
+  const commentBoxRef = useRef(null);
+  const iconPickerRef = useRef(null);
 
   const {
     thumbup,
-    thumbdown,
     isUpvoted,
-    isDownvoted,
     handleClickUp,
-    handleClickDown
-  } = useCommentVoting(comment.Thumbup, comment.Thumbdown, article.Id, comment.Id);
-
-  const { handleShare } = useShareFeature();
+  } = useCommentVoting(comment.Thumbup, null, article.article_id, comment.Id);
 
   useEffect(() => {
     if ((lastCommentId === comment.Id || commentIdToScrollTo === comment.Id) && actualCommentRef.current) {
@@ -45,6 +41,25 @@ export default function Comment({
       }, 100);
     }
   }, [lastCommentId, commentIdToScrollTo, comment.Id, setCommentIdToScrollTo]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const isClickInsideCommentBox = commentBoxRef.current && commentBoxRef.current.contains(event.target);
+      const isClickInsideIconPicker = iconPickerRef.current && iconPickerRef.current.contains(event.target);
+      
+      if (!isClickInsideCommentBox && !isClickInsideIconPicker) {
+        setShowCommentBox(false);
+      }
+    };
+
+    if (showCommentBox) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showCommentBox]);
 
   useEffect(() => {
     if (showCommentBox && textareaRef.current) {
@@ -110,7 +125,7 @@ export default function Comment({
       <p className="wrapper-actual-topic">{comment.Comment}</p>
 
       {showCommentBox && (
-        <div className="wrapper-commentbox">
+        <div className="wrapper-commentbox" ref={commentBoxRef}>
           <p className="commentbox-reply-to">
             Replying to: {comment.Username}
           </p>
@@ -126,16 +141,13 @@ export default function Comment({
             />
             <p
               onClick={() => setShowIconPicker(true)}
-              className="btn-submit btn-submit-send"
+              className="btn-submit btn-submit-send btn-icons"
               aria-label="Open emoji picker"
             >
               <i className="bi bi-emoji-smile"></i>
             </p>
             <p className="btn-submit btn-submit-send" onClick={handleSendReply}>
               Send
-            </p>
-            <p className="btn-cancel" onClick={() => setShowCommentBox(false)}>
-              Cancel
             </p>
           </div>
         </div>
@@ -149,36 +161,16 @@ export default function Comment({
           tabIndex={0}
           aria-label="Upvote"
         >
-          <i className={`bi ${isUpvoted ? "bi-hand-thumbs-up-fill" : "bi-hand-thumbs-up"}`}></i>
+          <i className={`bi ${isUpvoted ? "bi-arrow-up-circle-fill" : "bi-arrow-up-circle"}`}></i>
           {thumbup > 0 && <p>{thumbup}</p>}
         </div>
 
-        {/* <div
-          onClick={handleClickDown}
-          className={`wrapper-upvotes downvote click-animate ${isDownvoted ? "active" : ""}`}
-          role="button"
-          tabIndex={0}
-          aria-label="Downvote"
-        >
-          <i className={`bi ${isDownvoted ? "bi-hand-thumbs-down-fill" : "bi-hand-thumbs-down"}`}></i>
-          {thumbdown > 0 && <p>{thumbdown}</p>}
-        </div> */}
-
         {user !== null && (
           <p className="icon-button wrapper-upvotes fold-unfold-btn" onClick={() => setShowCommentBox(prev => !prev)}>
-            <i className="bi bi-arrow-up-circle"></i>
+            <i className="bi bi-chat-dots"></i>
             Comment
           </p>
         )}
-
-        <i
-          onClick={() => handleShare("", window.location.href)}
-          style={{ cursor: 'pointer', display: "none" }}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => { if (e.key === 'Enter') handleShare("", window.location.href) }}
-          className="bi bi-share icon-button"
-        />
 
         {comment.Nested?.length > 0 && (
           <p
@@ -211,6 +203,7 @@ export default function Comment({
         <IconPicker 
           onSelect={handleIconSelect} 
           onClose={() => setShowIconPicker(false)} 
+          ref={iconPickerRef}
         />
       )}
     </div>

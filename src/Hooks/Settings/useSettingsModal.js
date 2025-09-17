@@ -265,7 +265,6 @@ export const useSettingsModal = () => {
             login(updateduser)
 
             if (response.email !== "") {
-                console.log("Profile image updated successfully.");
                 setIsProfileImageUpdated(true);
                 setTimeout(() => setIsProfileImageUpdated(false), 3000);
             } else {
