@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { fetchOnTagPath } from '../../Utils/api';
 
 const debounce = (func, delay) => {
@@ -15,31 +15,33 @@ export const useTagLookup = () => {
     const [tagSuggestions, setTagSuggestions] = useState([]);
     const [isLoadingTags, setIsLoadingTags] = useState(false);
 
-    const lookupTags = async (query) => {
+    const lookupTags = useCallback(async (query) => {
         if (!query || query.length === 0) {
             setTagSuggestions([]);
             return;
         }
-        
+
         setIsLoadingTags(true);
         try {
             const request = await fetchOnTagPath(query);
+            if (!request.ok) {
+                throw new Error(`HTTP error! status: ${request.status}`);
+            }
             const response = await request.json();
-            setTagSuggestions(response);
+            setTagSuggestions(response.tags || []);
         } catch (error) {
             console.error("Error fetching tag suggestions:", error);
             setTagSuggestions([]);
         } finally {
             setIsLoadingTags(false);
         }
-    };
-    
+    }, []);
+
     const debouncedLookupTags = useRef(debounce(lookupTags, 500)).current;
 
     return {
         tagSuggestions,
         isLoadingTags,
-        lookupTags,
         debouncedLookupTags,
         setTagSuggestions,
     };

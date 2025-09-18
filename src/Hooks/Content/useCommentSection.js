@@ -22,7 +22,7 @@ export const useCommentSection = (article) => {
             try {
                 setIsLoading(true);
                 const result = await fetchCommentsApi(article.article_id);
-                const transformed = transformComments(result);
+                const transformed = transformComments(result.data);
                 setCommentList(transformed);
             } catch (error) {
                 console.error("Failed to fetch comments:", error);
@@ -70,16 +70,16 @@ export const useCommentSection = (article) => {
         if (!posted) return;
 
         const newReply = {
-            Id: posted.comment_id,
-            TopContent: posted.parent_comment_id,
+            Id: posted.data.comment_id,
+            TopContent: posted.data.parent_comment_id,
             Thumbup: 0,
             Thumbdown: 0,
-            Username: posted.user_id,
-            Comment: posted.content,
-            Date: posted.created_at || "",
+            Username: posted.data.user_id,
+            Comment: posted.data.content,
+            Date: posted.data.created_at || "",
             Nested: [],
-            image: posted.image,
-            UsernamePrimary: posted.author_primary_id,
+            image: posted.data.image,
+            UsernamePrimary: posted.data.author_primary_id,
         };
 
         const addNestedReply = (list) => {
@@ -105,7 +105,7 @@ export const useCommentSection = (article) => {
 
             if (parentComment) {
                 if (parentComment.Username) {
-                    createNotification(parentComment.UsernamePrimary, `Reply to your comment on "${article.heading}".`, article.article_id, posted.comment_id);
+                    createNotification(parentComment.UsernamePrimary, `Reply to your comment on "${article.heading}".`, article.article_id, posted.data.comment_id);
                 }
                 
                 return addNestedReply(prevComments);
@@ -115,7 +115,7 @@ export const useCommentSection = (article) => {
             }
         });
 
-        setLastCommentId(posted.comment_id);
+        setLastCommentId(posted.data.comment_id);
         setCommentCount((prevCount) => prevCount + 1);
     };
 
@@ -135,23 +135,23 @@ export const useCommentSection = (article) => {
 
         if (posted) {
             const newComment = {
-                Id: posted.comment_id,
-                TopContent: posted.parent_comment_id,
+                Id: posted.data.comment_id,
+                TopContent: posted.data.parent_comment_id,
                 Thumbup: 0,
                 Thumbdown: 0,
-                Username: posted.user_id,
-                Comment: posted.content,
-                Date: posted.created_at || "",
+                Username: posted.data.user_id,
+                Comment: posted.data.content,
+                Date: posted.data.created_at || "",
                 Nested: [],
-                image: posted.image,
-                UsernamePrimary: posted.author_primary_id,
+                image: posted.data.image,
+                UsernamePrimary: posted.data.author_primary_id,
             };
             setCommentList((prev) => [newComment, ...prev]);
-            setLastCommentId(posted.comment_id);
+            setLastCommentId(posted.data.comment_id);
             setCommentCount((prevCount) => prevCount + 1);
 
             if (article.Author) {
-                await createNotification(article.author_primary_id, `A new comment was posted on your article "${article.heading}".`, article.article_id, posted.comment_id);
+                await createNotification(article.author_primary_id, `A new comment was posted on your article "${article.heading}".`, article.article_id, posted.data.comment_id);
             }
         }
     };

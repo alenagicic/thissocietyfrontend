@@ -91,14 +91,14 @@ export const useSettingsModal = () => {
         try {
             const response = await fetchArticlesByAuthor(user.userId, startKey);
             
-            if (!response || !response.data) {
+            if (!response || !response.articles) {
                 console.error("API response for articles is malformed or empty:", response);
                 setHasMoreArticles(false);
                 return;
             }
 
             const existingArticleIds = new Set(createdArticles.map(article => article.article_id));
-            const uniqueNewArticles = response.data.filter(
+            const uniqueNewArticles = response.articles.filter(
                 article => !existingArticleIds.has(article.article_id)
             );
             

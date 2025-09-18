@@ -13,7 +13,7 @@ export const useArticleData = (filterType, filterValue) => {
         setIsLoading(true);
         try {
             const response = await fetchArticlesByAuthor(newAuthorId, exclusiveStartKey);
-            const newArticles = response.data;
+            const newArticles = response.articles;
             const newLastEvaluatedKey = response.last_evaluated_key;
             
             // ... (rest of your data adaptation logic) ...

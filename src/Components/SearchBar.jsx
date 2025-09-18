@@ -16,7 +16,7 @@ export default function Search() {
 
     const dropdownRef = useRef(null);
     const searchRef = useRef(null);
-    const inputRef = useRef(null); // Ref for the search input field
+    const inputRef = useRef(null);
 
     // Tag-specific state and hook
     const { tagSuggestions, debouncedLookupTags } = useTagLookup();

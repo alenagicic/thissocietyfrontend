@@ -17,7 +17,7 @@ export const useArticle = (articleId) => {
             setError(null);
             try {
                 const fetchedArticle = await fetchSingleArticle(articleId);
-                setArticle(fetchedArticle);
+                setArticle(fetchedArticle.data);
             } catch (err) {
                 console.error("Failed to fetch article:", err);
                 setArticle(null);
