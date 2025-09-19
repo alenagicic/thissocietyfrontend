@@ -8,12 +8,10 @@ export default function Header() {
   const [isNavVisible, setIsNavVisible] = useState(false);
   const userLoggedIn = !!user;
 
-  // Function to toggle the navigation menu
   const toggleNavbar = () => {
     setIsNavVisible(prev => !prev);
   };
 
-  // Function to handle link clicks and signout
   const handleAction = async (actionType) => {
     if (actionType === 'signout') {
       try {
@@ -21,17 +19,14 @@ export default function Header() {
         logout();
       } catch (error) {
         console.error('Error signing out:', error.message || error);
-        // User feedback logic here
       }
     } else {
-      // This is the new logic: when a link is clicked, scroll to top.
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
     }
     
-    // Close the navbar for all actions
     setIsNavVisible(false);
   };
 
@@ -53,9 +48,7 @@ export default function Header() {
         <i className={`bi ${isNavVisible ? 'bi-x-lg' : 'bi-list'}`}></i>
       </button>
 
-      {/* The navigation menu with conditional visibility */}
       <div className={`wrapper-header-nav ${isNavVisible ? 'is-visible' : ''}`}>
-        {/* Render base navigation links */}
         {navLinks.map((link) => (
           <Link key={link.to} to={link.to} onClick={() => handleAction('link')}>
             <button aria-label={link.label}>
@@ -66,7 +59,6 @@ export default function Header() {
 
         {userLoggedIn ? (
           <>
-            {/* Render logged-in links */}
             {loggedInLinks.map((link) => (
               <Link key={link.to} to={link.to} onClick={() => handleAction('link')}>
                 <button aria-label={link.label}>
@@ -74,13 +66,11 @@ export default function Header() {
                 </button>
               </Link>
             ))}
-            {/* Sign-out button */}
             <button onClick={() => handleAction('signout')} aria-label="Sign out">
               <i className="bi-box-arrow-in-left text-lg"></i>
             </button>
           </>
         ) : (
-          /* Render logged-out link */
           <Link to="/auth" onClick={() => handleAction('link')}>
             <button aria-label="Sign in">
               <i className="bi-box-arrow-in-right text-lg"></i>

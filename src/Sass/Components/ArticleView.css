@@ -1,7 +1,3 @@
-/*
- * Pop-up box
- * A modal-like container for displaying content.
- */
 .popup {
   background: whitesmoke;
   position: fixed;
@@ -35,10 +31,6 @@
   padding: 0;
 }
 
-/*
- * Image Carousel Section
- * Handles the display of images within the pop-up.
- */
 .popup-image-carousel {
   display: flex;
   gap: 0.5rem;
@@ -124,10 +116,6 @@
   padding-left: 0.2rem;
 }
 
-/*
- * Header & Title Section
- * Manages the main heading and "Back" button.
- */
 .popup-header {
   width: 100%;
   display: flex;
@@ -173,10 +161,6 @@
   transform: scale(0.99);
 }
 
-/*
- * Main Content Section
- * Contains the article's text body.
- */
 .popup-article {
   line-height: 1.4rem;
   font-size: 1rem;
@@ -224,10 +208,6 @@
   margin-bottom: 1rem;
 }
 
-/*
- * Vote & Meta Section
- * Displays author, date, upvotes, downvotes, and share button.
- */
 .popup-meta {
   font-size: 1.2rem;
   display: flex;
@@ -385,18 +365,12 @@
   transform: scale(0.95);
 }
 
-/*
- * Additional/Utility Classes
- */
 .disabled {
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
 }
 
-/*
- * Loading state
- */
 .popup-loading {
   display: flex;
   justify-content: center;
@@ -404,9 +378,6 @@
   z-index: 10001;
 }
 
-/*
- * Tagging system (currently not displayed)
- */
 .popup-tags {
   display: none;
   gap: 1rem;

@@ -6,7 +6,6 @@ const SimpleEditor = () => {
     const [selectedFormat, setSelectedFormat] = useState('4');
     const [activeAlign, setActiveAlign] = useState('justifyLeft');
 
-    // Mapping of execCommand fontSize values to pixel values
     const fontSizeMap = {
         '1': '10px',
         '2': '13px',
@@ -20,7 +19,6 @@ const SimpleEditor = () => {
     useEffect(() => {
         const editor = editorRef.current;
         if (editor) {
-            // Function to update the toolbar based on the current selection
             const updateToolbar = () => {
                 const formats = {
                     bold: document.queryCommandState('bold'),
@@ -33,10 +31,9 @@ const SimpleEditor = () => {
                 if (currentFontSize) {
                     setSelectedFormat(currentFontSize);
                 } else {
-                    setSelectedFormat('4'); // Default back to normal if no font size is found
+                    setSelectedFormat('4');
                 }
                 
-                // Update active alignment state
                 if (document.queryCommandState('justifyLeft')) {
                     setActiveAlign('justifyLeft');
                 } else if (document.queryCommandState('justifyCenter')) {
@@ -46,10 +43,8 @@ const SimpleEditor = () => {
                 }
             };
 
-            // Listen for changes in the editor to update the toolbar state
             editor.addEventListener('mouseup', updateToolbar);
             editor.addEventListener('keyup', updateToolbar);
-            // Also update on initial mount
             updateToolbar();
 
             return () => {
@@ -84,7 +79,6 @@ const SimpleEditor = () => {
         <div className="editor-container">
             <div className="editor-card">
                 <div className="toolbar">
-                    {/* Font Size Dropdown in pixels */}
                     <select 
                         value={selectedFormat} 
                         onChange={handleFormatChange} 
@@ -95,7 +89,6 @@ const SimpleEditor = () => {
                         ))}
                     </select>
 
-                    {/* Formatting Buttons */}
                     <button
                         onMouseDown={(e) => { e.preventDefault(); toggleFormat('bold'); }}
                         className={`toolbar-button ${activeFormats['bold'] ? 'toolbar-button-active' : ''}`}
@@ -115,7 +108,6 @@ const SimpleEditor = () => {
                         <span className="underline">U</span>
                     </button>
                     
-                    {/* Alignment Buttons */}
                     <button
                         onMouseDown={(e) => { e.preventDefault(); toggleAlign('justifyLeft'); }}
                         className={`toolbar-button ${activeAlign === 'justifyLeft' ? 'toolbar-button-active' : ''}`}

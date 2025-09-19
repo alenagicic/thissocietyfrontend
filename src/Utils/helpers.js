@@ -33,7 +33,6 @@ export const transformComments = (comments) => {
 };
 
 export const slugify = (text, id) => {
-    // Appending ID makes it unique even if titles are identical.
     const slug = text
         .toString()
         .normalize("NFD")
@@ -44,7 +43,6 @@ export const slugify = (text, id) => {
         .replace(/[^\w-]+/g, "")
         .replace(/--+/g, "-");
 
-    // Important: Ensure the ID is always part of the slug for unique identification
     return `${slug}-${id}`;
 };
 
@@ -53,7 +51,6 @@ export function formatTimeAgo(timestamp) {
     const past = new Date(timestamp);
     const diffInSeconds = Math.floor((now - past) / 1000);
 
-    // Handle different time units for a robust solution
     const minutes = Math.floor(diffInSeconds / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);

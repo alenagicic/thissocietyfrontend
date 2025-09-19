@@ -86,7 +86,6 @@ export const useTagInput = ({ existingTags, onTagsChange }) => {
         }
     };
 
-    // NEW: Function to clear the tags
     const clearTags = () => {
         setCurrentTag('');
         onTagsChange([]);
@@ -102,6 +101,6 @@ export const useTagInput = ({ existingTags, onTagsChange }) => {
         handleKeyDown,
         handleRemoveTag,
         handleSuggestionClick,
-        clearTags, // Expose the new function
+        clearTags,
     };
 };

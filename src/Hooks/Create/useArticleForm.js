@@ -37,9 +37,9 @@ export const useArticleForm = ({ postArticleWithImages, selectedImages }) => {
         setArticle({
             heading: '',
             description: '',
-            tags: [], // Tags will be cleared by the useTagInput hook
+            tags: [],
         });
-        setContent(''); // This clears the Tiptap editor
+        setContent('');
     };
 
     const postAndClose = async (onSuccess) => {

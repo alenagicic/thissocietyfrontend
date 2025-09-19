@@ -11,38 +11,32 @@ export default function Search() {
     const [filterType, setFilterType] = useState('author');
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    // State to track if the search input is focused
     const [isFocused, setIsFocused] = useState(false);
 
     const dropdownRef = useRef(null);
     const searchRef = useRef(null);
     const inputRef = useRef(null);
 
-    // Tag-specific state and hook
     const { tagSuggestions, debouncedLookupTags } = useTagLookup();
     const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
-    // New state for author suggestions (now stores objects with userId and username)
     const [authorSuggestions, setAuthorSuggestions] = useState([]);
     const [authorDropdownOpen, setAuthorDropdownOpen] = useState(false);
     const [highlightedAuthorIndex, setHighlightedAuthorIndex] = useState(-1);
     const [selectedAuthor, setSelectedAuthor] = useState(null);
 
-    // New debounced function for author lookup
     const debouncedLookupAuthors = useRef(
         (username) => {
             const endpoint = `account/checkusername/${username}/returnid`;
             fetchSuggestions(endpoint)
                 .then(data => {
-                    // Update state to store the full user objects
                     setAuthorSuggestions(data.users);
                 })
                 .catch(error => console.error("Error fetching author suggestions:", error));
         }
     ).current;
     
-    // useEffect to focus the input field when the search bar becomes visible
     useEffect(() => {
         if (showSearch && inputRef.current) {
             inputRef.current.focus();
@@ -52,8 +46,6 @@ export default function Search() {
     const handleSearchSubmit = (event) => {
         event.preventDefault();
         
-        // Navigation will only occur if a selection has been made.
-        // This prevents searching on raw input.
         if (filterType === 'author' && selectedAuthor) {
             navigate(`/content/author/${selectedAuthor.userId}`);
         } else if (filterType === 'tag' && tagSuggestions.length > 0 && tagSuggestions.includes(searchQuery)) {
@@ -77,7 +69,7 @@ export default function Search() {
     const handleInputChange = (e) => {
         const value = e.target.value;
         setSearchQuery(value);
-        setSelectedAuthor(null); // Clear selected author on input change
+        setSelectedAuthor(null);
 
         if (filterType === 'tag' && value.trim().length > 0) {
             debouncedLookupTags(value);
@@ -266,10 +258,7 @@ export default function Search() {
                                 'username'
                             )
                         )}
-{/* 
-                        <button type="submit" className='search-button'>
-                            <i className="bi-search text-lg"></i>
-                        </button> */}
+                        
                     </form>
                 </div>
             )}

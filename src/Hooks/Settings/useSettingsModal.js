@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useRef } from "react";
-import { apiCall, uploadImageToS3, fetchArticlesByAuthor, fetchSingleArticle } from "../../Utils/api";
+import { apiCall, uploadImageToS3, fetchArticlesByAuthor } from "../../Utils/api";
 import { AuthContext } from '../../Context/AuthContext';
 import { useNavigate } from 'react-router-dom'
 
@@ -7,7 +7,6 @@ export const useSettingsModal = () => {
     const { user, login } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // Use a ref to track the initial render and prevent double-fetching in development mode
     const initialRenderArticles = useRef(true);
 
     const [whattab, setwhattab] = useState("created");
@@ -75,7 +74,6 @@ export const useSettingsModal = () => {
         }
     }, [whattab]);
 
-    // Fetch initial articles when the tab is active
     useEffect(() => {
         if (whattab === "created" && user?.userId) {
             if (initialRenderArticles.current) {

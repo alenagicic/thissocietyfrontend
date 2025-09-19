@@ -16,7 +16,6 @@ export const useAuthModal = () => {
     const { user, login, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // Password validation logic
     useEffect(() => {
         if (password.length === 0 && passwordRepeat.length === 0) {
             setPasswordErrors([]);
@@ -74,7 +73,6 @@ export const useAuthModal = () => {
             }
         } catch (error) {
             console.error("Error signing in:", error.message || error);
-            // This alert is temporary for demonstration, a better UI error message is recommended
             alert(error.message || "Sign in failed.");
         } finally {
             setIsLoading(false);
@@ -82,7 +80,6 @@ export const useAuthModal = () => {
     };
 
     const handleSignUp = async () => {
-        // Prevent submission if there are validation errors
         if (passwordErrors.length > 0 || password.length === 0 || email.length === 0) {
             return;
         }

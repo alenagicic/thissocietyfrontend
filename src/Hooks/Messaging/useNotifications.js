@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext, useRef } from "react";
 import { fetchNotifications, markNotificationAsRead } from "../../Utils/api";
-import { slugify } from "../../Utils/helpers";
 import { AuthContext } from '../../Context/AuthContext';
 import { ScrollContext } from '../../Context/ScrollContext';
 import { useNavigate } from "react-router-dom";

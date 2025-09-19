@@ -1,7 +1,6 @@
 const apiKey = import.meta.env.VITE_API_KEY;
 const apiBaseUrl = import.meta.env.VITE_API_URL;
 
-// Use the Vite proxy in development, otherwise use the full API URL.
 const getApiUrl = (path) => {
     return import.meta.env.DEV ? `/api${path}` : `${apiBaseUrl}${path}`;
 };
@@ -282,24 +281,19 @@ export const fetchAuthUser = async () => {
 
 export const fetchArticlesByAuthor = async (author_id, startKey) => {
     try {
-        // Construct the base path, which can be relative or absolute.
         const path = getApiUrl(`/articles/byauthor`);
         
-        // Use URLSearchParams to build and encode the query string.
         const searchParams = new URLSearchParams();
         searchParams.append('author_id', author_id);
         
         if (startKey) {
-            // Correctly stringify and encode the last evaluated key.
             const jsonKey = JSON.stringify(startKey);
             const encodedKey = encodeURIComponent(jsonKey);
             searchParams.append('last_evaluated_key', encodedKey);
         }
 
-        // Concatenate the path and the encoded search parameters.
         const fullUrl = `${path}?${searchParams.toString()}`;
 
-        // Pass the full URL string to fetch().
         const request = await fetch(fullUrl, {
             method: "GET",
             headers: {
@@ -333,16 +327,13 @@ export const fetchUserId = async (author_id) => {
         });
 
         if (!request.ok) {
-            // Throw an error if the HTTP status code is not in the 200s
             throw new Error(`HTTP error! Status: ${request.status}`);
         }
 
         const response = await request.json();
-        return response; // You might want to return the data for use elsewhere
+        return response;
     } catch (error) {
-        // This catches both network errors and the custom HTTP error
         console.error("Failed to fetch user ID:", error);
-        // You can return a default value or re-throw the error
         return null;
     }
 }

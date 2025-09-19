@@ -30,6 +30,7 @@ export default function AuthProvider({ children }) {
         }
 
         const data = await res.json(); 
+        console.log(data)
         setUser(data.user);       
       } catch (error) {
         console.error("Fetch or processing error:", error);

@@ -48,7 +48,6 @@ export default function TiptapEditor({ content, onContentChange, nextElementRef 
     const editor = useEditor({
         extensions: [
             StarterKit,
-            // Configure and add the Placeholder extension
             Placeholder.configure({
                 placeholder: 'Let\'s write something inspirational',
             }),
@@ -67,7 +66,6 @@ export default function TiptapEditor({ content, onContentChange, nextElementRef 
     };
 
     const handleKeyDown = (event) => {
-        // Prevent default tab behavior
         if (event.key === 'Tab' && !event.shiftKey) {
             event.preventDefault();
             if (nextElementRef?.current) {

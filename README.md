@@ -1,1 +1,1 @@
-A minimal React CMS.
+Frontend for minimal React CMS.

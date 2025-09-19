@@ -58,9 +58,7 @@ export const useImageSearchModal = (onImageSelectCallback) => {
     const debouncedFetch = useRef(debounce(fetchPexelsImages, 500));
 
     const handlePexelsImageSelect = async (imageUrl, photographer, photographerUrl) => {
-        // Start the loading state immediately
         setIsUploadingPexelsImage(true);
-        // Close the modal immediately for a better user experience
         setPexelsModalOpen(false); 
         try {
             const response = await fetch(imageUrl);
@@ -81,7 +79,6 @@ export const useImageSearchModal = (onImageSelectCallback) => {
             console.error("Error handling Pexels image:", err);
             console.error("Failed to upload Pexels image.");
         } finally {
-            // End the loading state when the upload is complete (success or failure)
             setIsUploadingPexelsImage(false);
         }
     };

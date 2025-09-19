@@ -1,8 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import PexelsModal from '../Components/PexelsModal';
-import TiptapEditor from '../Components/TiptapEditor'; // Update this import
-
-// ... other imports
+import TiptapEditor from '../Components/TiptapEditor';
 import { useCreateArticleModal } from '../Hooks/Create/useCreateArticleModal';
 import { useImageSearchModal } from '../Hooks/Create/useImageSearchModal';
 import { useArticleForm } from '../Hooks/Create/useArticleForm';
@@ -10,11 +8,9 @@ import { useTagInput } from '../Hooks/Create/useTagInput';
 
 export default function CreatePage() {
 
-    // Create a ref to reference the next element in the tab order
     const uploadButtonRef = useRef(null);
-    const titleInputRef = useRef(null); // Ref for the title input
+    const titleInputRef = useRef(null);
 
-    // useEffect to focus the title input when the component mounts
     useEffect(() => {
         if (titleInputRef.current) {
             titleInputRef.current.focus();
@@ -78,7 +74,6 @@ export default function CreatePage() {
     });
 
     const handleSuccessfulSubmission = () => {
-        // Clear all form state
         clearForm();
         clearTags();
         setSelectedImages([]);
@@ -189,7 +184,7 @@ export default function CreatePage() {
                 <TiptapEditor 
                     content={content}
                     onContentChange={handleContentChange}
-                    nextElementRef={uploadButtonRef} // Pass the ref here
+                    nextElementRef={uploadButtonRef}
                 />
 
                 <div className="image-upload-wrapper">
@@ -197,7 +192,7 @@ export default function CreatePage() {
                         tabIndex={5} 
                         className="upload-label" 
                         htmlFor="imageInput"
-                        ref={uploadButtonRef} // Attach the ref here
+                        ref={uploadButtonRef}
                     >
                         Upload
                         <input
