@@ -1,4 +1,4 @@
-name: Deploy to S3
+name: Deploy to S3 + CloudFront
 
 on:
   push:
@@ -37,3 +37,9 @@ jobs:
 
       - name: Deploy to S3
         run: aws s3 sync ./dist/ s3://planetarium-frontend --delete
+      
+      - name: Invalidate CloudFront Cache 🚀
+        run: |
+          aws cloudfront create-invalidation \
+          --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+          --paths "/*"
