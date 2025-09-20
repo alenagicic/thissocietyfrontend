@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
-  align-items: center;
+  align-items: stretch;
 }
 .wrapper-content-presenter .author-title {
   position: sticky;
@@ -15,4 +15,7 @@
   border-radius: 1rem;
   z-index: 100;
   text-transform: capitalize;
+  max-width: 15rem;
+  margin-left: auto;
+  margin-right: auto;
 }

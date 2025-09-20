@@ -204,7 +204,7 @@ export default function CreatePage() {
                             multiple
                         />
                     </label>
-                    <label
+                    <label style={{display: "none"}}
                         tabIndex={6}
                         onClick={handleOpenImageSearchModal}
                         className="upload-label"

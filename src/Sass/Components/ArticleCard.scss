@@ -11,7 +11,8 @@
     background-color: #f7f7f7;
     overflow: hidden;
     animation: fadeIn 0.4s ease-out forwards;
-
+    margin-left: auto;
+    margin-right: auto;
 
     &:hover h2 {
     text-decoration: underline;
@@ -58,11 +59,11 @@
     flex-shrink: 0;
     height: 20rem;
 
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     }
 
     .content-headers-container {
