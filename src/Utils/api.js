@@ -8,7 +8,6 @@ const getApiUrl = (path) => {
 const createHeaders = () => ({
     "x-api-key": apiKey,
     "Content-Type": "application/json",
-    "credentials": "include"
 });
 
 export const postCommentToBackend = async ({ articleId, userId, content, parentId = null, image, userPrimaryId }) => {
@@ -16,6 +15,7 @@ export const postCommentToBackend = async ({ articleId, userId, content, parentI
         const response = await fetch(getApiUrl(`/articles/${articleId}/comment`), {
             method: "POST",
             headers: createHeaders(),
+            credentials: 'include',
             body: JSON.stringify({
                 article_id: articleId,
                 user_id: userId,
@@ -50,6 +50,7 @@ export const postRatingToBackendTopic = async (articleId, typeRating) => {
         const response = await fetch(getApiUrl(`/articles/${articleId}`), {
             method: "PUT",
             headers: createHeaders(),
+            credentials: 'include',
             body: JSON.stringify(body),
         });
         const data = await response.json();
@@ -70,6 +71,7 @@ export const postCommentCountToBackend = async (articleId, commentCountChange) =
         const response = await fetch(getApiUrl(`/articles/${articleId}`), {
             method: "PUT",
             headers: createHeaders(),
+            credentials: 'include',
             body: JSON.stringify(body),
         });
         const data = await response.json();
@@ -93,6 +95,7 @@ export const postRatingCommentToBackend = async ({ articleId, commentId, typeRat
         const result = await fetch(getApiUrl(`/articles/${articleId}/comment/${commentId}`), {
             method: "PUT",
             headers: createHeaders(),
+            credentials: 'include',
             body: JSON.stringify(body)
         });
         return result.ok;
@@ -147,6 +150,8 @@ export const fetchCommentsApi = async (articleId) => {
     try {
         const res = await fetch(getApiUrl(`/articles/${articleId}/comment`), {
             headers: createHeaders(),
+            credentials: 'include'
+
         });
         const result = await res.json();
         if (res.ok && result && result.message !== "Internal server error") {
@@ -194,6 +199,7 @@ export const createNotification = async (authorPrimaryId, message, article_id, c
         const response = await fetch(getApiUrl(`/users/${authorPrimaryId}/notifications`), {
             method: "POST",
             headers: createHeaders(),
+            credentials: 'include',
             body: JSON.stringify({
                 author_primary_id: authorPrimaryId,
                 message,
@@ -221,6 +227,7 @@ export const fetchNotifications = async (userId, lastKnownKey = null) => {
         const response = await fetch(url, {
             method: 'GET',
             headers: createHeaders(),
+            credentials: 'include'
         });
 
         if (!response.ok) {
@@ -242,6 +249,7 @@ export const markNotificationAsRead = async (userId, notificationSk) => {
         const response = await fetch(getApiUrl(`/users/${userId}/notifications/${encodedSK}`), {
             method: "PUT",
             headers: createHeaders(),
+            credentials: 'include'
         });
         const result = await response.json();
         return result;
@@ -255,6 +263,8 @@ export const fetchSingleArticle = async (articleId) => {
     const request = await fetch(getApiUrl(`/articles/${articleId}`), {
         method: "GET",
         headers: createHeaders(),
+        credentials: 'include'
+
     });
     const result = await request.json();
     if (request.ok) {
@@ -268,7 +278,8 @@ export const fetchOnTagPath = async (value) => {
         headers: {
             "x-api-key": apiKey,
             "Content-Type": "application/json"
-        }
+        },
+        credentials: 'include'
     });
 }
 
@@ -277,7 +288,9 @@ export const fetchAuthUser = async () => {
         credentials: "include",
         headers: {
             "x-api-key": apiKey
-        }
+        },
+        credentials: 'include'
+
     });
 }
 
@@ -301,7 +314,9 @@ export const fetchArticlesByAuthor = async (author_id, startKey) => {
             headers: {
                 "x-api-key": apiKey,
                 "Content-Type": "application/json"
-            }
+            },
+            credentials: 'include'
+
         });
 
         if (!request.ok) {
@@ -325,7 +340,9 @@ export const fetchUserId = async (author_id) => {
             headers: {
                 "x-api-key": apiKey,
                 "Content-Type": "application/json"
-            }
+            },
+            credentials: 'include'
+
         });
 
         if (!request.ok) {
@@ -347,7 +364,8 @@ export const fetchSuggestions = async (endpoint) => {
             headers: {
                 "x-api-key": apiKey,
                 "Content-Type": "application/json"
-            }
+            },
+            credentials: 'include'
         });
 
         if (!response.ok) {
@@ -370,7 +388,8 @@ export const getRequest = async (endpoint) => {
         
         const response = await fetch(getApiUrl(`/${endpoint}`), {
             method: "GET",
-            headers: headers
+            headers: headers,
+            credentials: 'include'
         });
 
         if (!response.ok) {
