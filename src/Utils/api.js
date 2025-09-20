@@ -8,6 +8,7 @@ const getApiUrl = (path) => {
 const createHeaders = () => ({
     "x-api-key": apiKey,
     "Content-Type": "application/json",
+    "credentials": "include"
 });
 
 export const postCommentToBackend = async ({ articleId, userId, content, parentId = null, image, userPrimaryId }) => {
@@ -167,6 +168,7 @@ export const apiCall = async (endpoint, method, body = null) => {
     const response = await fetch(getApiUrl(endpoint), config);
     const data = await response.json();
     
+    console.log(response)
     if (!response.ok) {
         throw new Error(data.error || `API call to ${endpoint} failed with status ${response.status}`);
     }
