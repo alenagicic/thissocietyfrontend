@@ -139,16 +139,19 @@ export default function Comment({
               name="commentbox"
               id={`commentbox-${comment.Id}`}
             />
-            <p
+
+            <p className="btn-submit btn-submit-send send-btn" onClick={handleSendReply}>
+              Send
+            </p>
+
+            {/* <p
               onClick={() => setShowIconPicker(true)}
               className="btn-submit btn-submit-send btn-icons"
               aria-label="Open emoji picker"
             >
               <i className="bi bi-emoji-smile"></i>
-            </p>
-            <p className="btn-submit btn-submit-send" onClick={handleSendReply}>
-              Send
-            </p>
+            </p> */}
+        
           </div>
         </div>
       )}

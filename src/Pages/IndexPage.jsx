@@ -46,56 +46,6 @@ export default function IndexPage() {
   return (
     <>
       <main className="wrapper-index">
-        <section>
-          <div className="index-wrapper-latest">
-            {articlesToDisplay.length > 0 ? (
-              articlesToDisplay.map((item) => (
-                <Link
-                  to={`/content/main/latest/${item.Id}`}
-                  className='wrapper-index-link'
-                  key={item.Id}
-                >
-                  {/* Conditionally render image only if valid */}
-                  {item.ImagePlaceholder && item.ImagePlaceholder !== "/Images/logo192.png" ? (
-                    <div className="img-index-link">
-                      <img src={item.ImagePlaceholder} alt={item.TopicName} />
-                    </div>
-                  ) : null}
-
-                  <div className="wrapper-index-link-cnt">
-                    <h3>{item.TopicName}</h3>
-                    <span>
-                      <i>Posted by:</i> <b>{item.Author}</b>
-                      <span>
-                        <i className="bi bi-chat-dots-fill"></i>
-                        {item.NumberPosts}
-                      </span>
-                    </span>
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <div className="spinner"></div>
-            )}
-          </div>
-          <div className="wrapper-index-tgle-btn">
-            <button onClick={handlePrevious} disabled={currentPage === 0}>
-              <i className="bi bi-chevron-left"></i>
-            </button>
-            <button onClick={handleNext} disabled={currentPage >= articles.length - 3}>
-              <i className="bi bi-chevron-right"></i>
-            </button>
-          </div>
-        </section>
-
-        <section>
-          <Link onClick={handleLinkClick} className="link-removelink" to={"/content/main/latest"}>
-            <div className="signup-index btn-flow-idx">
-              Start Exploring
-              <i className="bi bi-arrow-right-circle-fill fs-3"></i>
-            </div>
-          </Link>
-        </section>
 
         <section className="join-us-wrapper about-index">
           <h1>
@@ -108,11 +58,20 @@ export default function IndexPage() {
             Planetarium.com is an open publishing platform where anyone can join and share their voice. Simply sign up with your email and password to start writing articles that contribute to the collective stream of content.
           </p>
           <p>
-            You can explore a wide range of topics and engage with the community through comments.
+            You can explore a wide range of topics and engage with the community.
           </p>
         </section>
 
-        <section className="wrapper-pexels-idx join-us-wrapper">
+        <section>
+          <Link onClick={handleLinkClick} className="link-removelink" to={"/content/main/latest"}>
+            <div className="signup-index btn-flow-idx">
+              Start Exploring
+              <i className="bi bi-arrow-right-circle-fill fs-3"></i>
+            </div>
+          </Link>
+        </section>
+
+        {/* <section className="wrapper-pexels-idx join-us-wrapper">
           <div>
             <h2>
               Powered by the Pexels API.
@@ -126,7 +85,7 @@ export default function IndexPage() {
           </div>
 
           <img src={pexels} alt="" />
-        </section>
+        </section> */}
 
         <section className="join-us-wrapper">
           <h3>

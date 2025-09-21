@@ -25,6 +25,11 @@
   transition: all 0.3s ease;
 }
 
+@media screen and (max-width: 520px) {
+  .popup-content {
+    width: 90%;
+  }
+}
 .popup-content p,
 .popup-content strong {
   margin: 0;
@@ -243,11 +248,27 @@
   }
   .popup-meta .popup-meta__author {
     margin-right: auto;
-    width: 100%;
+    margin-left: auto;
+    width: auto;
+    border: 1px solid #2ecc71;
+    background-color: #2ecc71;
+    padding: 0.5rem;
+    padding-right: 1rem;
+    border-radius: 1rem;
+    font-weight: 600;
+  }
+  .popup-meta .popup-meta__author .popup-meta__author-name {
+    color: white;
+  }
+  .popup-meta .popup-meta__author .popup-meta__author-img-wrapper {
+    border: 1px solid transparent;
   }
   .popup-meta .popup-meta-wrapper {
     font-size: 0.8rem !important;
     margin-right: auto;
+  }
+  .popup-meta .popup-meta-wrapper .popup-meta__share-btn {
+    display: none;
   }
 }
 .popup-meta__author-img-wrapper {

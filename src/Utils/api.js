@@ -20,8 +20,6 @@ const createHeaders = () => {
 };
 
 export const fetchAuthUser = async () => {
-
-    console.log(localStorage.getItem("token"))
     
     let result = await fetch(getApiUrl(`/account/checkuser`), {
         headers: createHeaders(),

@@ -208,9 +208,9 @@ export default function ArticleView() {
                         </div>
                     </div>
                     <div className="popup-meta-wrapper">
-                        <div className="popup-meta__date">
+                        {/* <div className="popup-meta__date">
                             <i className="bi bi-clock popup-meta__date-icon"></i> {formatTimeAgo(article.created_at)}
-                        </div>
+                        </div> */}
                         <div
                             onClick={handleUpvote}
                             className={`popup-meta__vote-wrapper popup-meta__upvote ${hasUpvoted ? "popup-meta__vote-wrapper--active" : ""}`}

@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../Context/AuthContext';
-import { apiCall } from '../Utils/api';
+import { AuthContext } from '../context/AuthContext';
+import { apiCall } from '../utils/api';
 
 export default function Header() {
   const { user, logout } = useContext(AuthContext);
   const [isNavVisible, setIsNavVisible] = useState(false);
   const userLoggedIn = !!user;
+  const headerRef = useRef(null);
 
   const toggleNavbar = () => {
     setIsNavVisible(prev => !prev);
@@ -30,6 +31,25 @@ export default function Header() {
     setIsNavVisible(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if the click is outside the header's div.
+      // The toggle button is outside, so we also need to check its parent.
+      if (headerRef.current && !headerRef.current.contains(event.target) && !event.target.closest('.header-toggler')) {
+        setIsNavVisible(false);
+      }
+    };
+
+    if (isNavVisible) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isNavVisible]);
+
   const navLinks = [
     { to: '/', icon: 'bi-house', label: 'Home' },
     { to: '/content/main/latest', icon: 'bi-layout-text-window-reverse', label: 'Content' },
@@ -42,7 +62,7 @@ export default function Header() {
   ];
   
   return (
-    <div className="wrapper-header">
+    <div className="wrapper-header" ref={headerRef}>
       {/* Toggle button */}
       <button className={`header-toggler ${isNavVisible ? 'left' : ''}`} onClick={toggleNavbar}>
         <i className={`bi ${isNavVisible ? 'bi-x-lg' : 'bi-list'}`}></i>
