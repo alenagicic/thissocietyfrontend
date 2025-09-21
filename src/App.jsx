@@ -18,7 +18,7 @@ function App() {
       <div className='wrapper-app'>
         <div className='logo-place' style={{zIndex: "1000"}}>
           <h2 style={{cursor: "pointer"}} onClick={() => window.location.href = window.location.origin}>
-            Planetarium
+            Slowreads
           </h2>
         </div>
         <AuthProvider>
