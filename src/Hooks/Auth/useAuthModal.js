@@ -65,7 +65,10 @@ export const useAuthModal = () => {
         setPasswordErrors([]);
         try {
             const response = await apiCall("/account/signin", "POST", { email, password });
+
             if (response?.user) {
+                localStorage.setItem("token", response.token)
+                console.log(localStorage.getItem("token"))
                 login(response.user);
                 handleCloseAuthModal();
             } else {
@@ -88,6 +91,8 @@ export const useAuthModal = () => {
         try {
             const response = await apiCall("/account/signup", "POST", { email, password });
             if (response?.userId) {
+                localStorage.setItem("token", response.token)
+                console.log(localStorage.getItem("token"))
                 login(response);
                 handleCloseAuthModal();
             } else {
@@ -104,7 +109,8 @@ export const useAuthModal = () => {
     const handleSignout = async () => {
         setIsLoading(true);
         try {
-            await apiCall("/account/signout", "POST");
+            localStorage.removeItem("token")
+            console.log(localStorage.getItem("token"), "tangeriner")
             logout();
         } catch (error) {
             console.error("Error signing out:", error.message || error);

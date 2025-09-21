@@ -43,6 +43,7 @@ export default function AuthProvider({ children }) {
   const login = (userData) => setUser(userData);
 
   const logout = () => {
+    localStorage.removeItem("token")
     setUser(null);
     navigate("/");
   };

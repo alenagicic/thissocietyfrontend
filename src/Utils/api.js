@@ -5,17 +5,36 @@ const getApiUrl = (path) => {
     return import.meta.env.DEV ? `/api${path}` : `${apiBaseUrl}${path}`;
 };
 
-const createHeaders = () => ({
-    "x-api-key": apiKey,
-    "Content-Type": "application/json",
-});
+const createHeaders = () => {
+
+    let user = localStorage.getItem("token");
+    
+    const headers = {
+        "x-api-key": apiKey,
+        "Content-Type": "application/json",
+    };
+    if (user) {
+        headers["Authorization"] = `Bearer ${user}`;
+    }
+    return headers;
+};
+
+export const fetchAuthUser = async () => {
+
+    console.log(localStorage.getItem("token"))
+    
+    let result = await fetch(getApiUrl(`/account/checkuser`), {
+        headers: createHeaders(),
+    });
+
+    return result;
+};
 
 export const postCommentToBackend = async ({ articleId, userId, content, parentId = null, image, userPrimaryId }) => {
     try {
         const response = await fetch(getApiUrl(`/articles/${articleId}/comment`), {
             method: "POST",
             headers: createHeaders(),
-            credentials: 'include',
             body: JSON.stringify({
                 article_id: articleId,
                 user_id: userId,
@@ -29,7 +48,6 @@ export const postCommentToBackend = async ({ articleId, userId, content, parentI
         if (!response.ok) {
             throw new Error(result.error || "Failed to post comment");
         }
-
         return result;
     } catch (error) {
         console.error("Error posting comment:", error);
@@ -50,7 +68,6 @@ export const postRatingToBackendTopic = async (articleId, typeRating) => {
         const response = await fetch(getApiUrl(`/articles/${articleId}`), {
             method: "PUT",
             headers: createHeaders(),
-            credentials: 'include',
             body: JSON.stringify(body),
         });
         const data = await response.json();
@@ -71,7 +88,6 @@ export const postCommentCountToBackend = async (articleId, commentCountChange) =
         const response = await fetch(getApiUrl(`/articles/${articleId}`), {
             method: "PUT",
             headers: createHeaders(),
-            credentials: 'include',
             body: JSON.stringify(body),
         });
         const data = await response.json();
@@ -95,7 +111,6 @@ export const postRatingCommentToBackend = async ({ articleId, commentId, typeRat
         const result = await fetch(getApiUrl(`/articles/${articleId}/comment/${commentId}`), {
             method: "PUT",
             headers: createHeaders(),
-            credentials: 'include',
             body: JSON.stringify(body)
         });
         return result.ok;
@@ -119,7 +134,6 @@ export const fetchArticles = async (pageSize = 10, lastEvaluatedKey = null, tag 
             headers: createHeaders(),
         });
         const responsereply = await response.json();
-        
         if (response.ok) {
             return { articles: responsereply.articles, lastEvaluatedKey: responsereply.last_evaluated_key };
         } else {
@@ -150,8 +164,6 @@ export const fetchCommentsApi = async (articleId) => {
     try {
         const res = await fetch(getApiUrl(`/articles/${articleId}/comment`), {
             headers: createHeaders(),
-            credentials: 'include'
-
         });
         const result = await res.json();
         if (res.ok && result && result.message !== "Internal server error") {
@@ -168,11 +180,10 @@ export const fetchCommentsApi = async (articleId) => {
 
 export const apiCall = async (endpoint, method, body = null) => {
     const headers = createHeaders();
-    const config = { method, headers, credentials: "include" };
+    const config = { method, headers };
     if (body) config.body = JSON.stringify(body);
     const response = await fetch(getApiUrl(endpoint), config);
     const data = await response.json();
-    
     if (!response.ok) {
         throw new Error(data.error || `API call to ${endpoint} failed with status ${response.status}`);
     }
@@ -198,7 +209,6 @@ export const createNotification = async (authorPrimaryId, message, article_id, c
         const response = await fetch(getApiUrl(`/users/${authorPrimaryId}/notifications`), {
             method: "POST",
             headers: createHeaders(),
-            credentials: 'include',
             body: JSON.stringify({
                 author_primary_id: authorPrimaryId,
                 message,
@@ -217,24 +227,18 @@ export const createNotification = async (authorPrimaryId, message, article_id, c
 export const fetchNotifications = async (userId, lastKnownKey = null) => {
     try {
         let url = getApiUrl(`/users/${userId}/notifications`);
-
         if (lastKnownKey) {
             const encodedKey = encodeURIComponent(JSON.stringify(lastKnownKey));
             url += `?last_known_key=${encodedKey}`;
         }
-
         const response = await fetch(url, {
             method: 'GET',
             headers: createHeaders(),
-            credentials: 'include'
         });
-
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         const result = await response.json();
-
         return result;
     } catch (error) {
         console.error(`Error fetching notifications for user ${userId}:`, error);
@@ -248,7 +252,6 @@ export const markNotificationAsRead = async (userId, notificationSk) => {
         const response = await fetch(getApiUrl(`/users/${userId}/notifications/${encodedSK}`), {
             method: "PUT",
             headers: createHeaders(),
-            credentials: 'include'
         });
         const result = await response.json();
         return result;
@@ -262,8 +265,6 @@ export const fetchSingleArticle = async (articleId) => {
     const request = await fetch(getApiUrl(`/articles/${articleId}`), {
         method: "GET",
         headers: createHeaders(),
-        credentials: 'include'
-
     });
     const result = await request.json();
     if (request.ok) {
@@ -274,107 +275,64 @@ export const fetchSingleArticle = async (articleId) => {
 export const fetchOnTagPath = async (value) => {
     return await fetch(getApiUrl(`/articles/tags/suggestions?prefix=${value}`), {
         method: "GET",
-        headers: {
-            "x-api-key": apiKey,
-            "Content-Type": "application/json"
-        },
-        credentials: 'include'
+        headers: createHeaders(),
     });
-}
-
-export const fetchAuthUser = async () => {
-    return await fetch(getApiUrl(`/account/checkuser`), {
-        credentials: "include",
-        headers: {
-            "x-api-key": apiKey
-        },
-        credentials: 'include'
-
-    });
-}
+};
 
 export const fetchArticlesByAuthor = async (author_id, startKey) => {
     try {
         const path = getApiUrl(`/articles/byauthor`);
-        
         const searchParams = new URLSearchParams();
         searchParams.append('author_id', author_id);
-        
         if (startKey) {
             const jsonKey = JSON.stringify(startKey);
             const encodedKey = encodeURIComponent(jsonKey);
             searchParams.append('last_evaluated_key', encodedKey);
         }
-
         const fullUrl = `${path}?${searchParams.toString()}`;
-
         const request = await fetch(fullUrl, {
             method: "GET",
-            headers: {
-                "x-api-key": apiKey,
-                "Content-Type": "application/json"
-            },
-            credentials: 'include'
-
+            headers: createHeaders(),
         });
-
         if (!request.ok) {
             throw new Error(`HTTP error! Status: ${request.status}`);
         }
-
         const response = await request.json();
-
         return response;
-
     } catch (error) {
         console.error("Failed to fetch articles by author:", error);
         throw error;
     }
-}
+};
 
 export const fetchUserId = async (author_id) => {
     try {
         const request = await fetch(getApiUrl(`/account/lookupid/${author_id}`), {
             method: "GET",
-            headers: {
-                "x-api-key": apiKey,
-                "Content-Type": "application/json"
-            },
-            credentials: 'include'
-
+            headers: createHeaders(),
         });
-
         if (!request.ok) {
             throw new Error(`HTTP error! Status: ${request.status}`);
         }
-
         const response = await request.json();
         return response;
     } catch (error) {
         console.error("Failed to fetch user ID:", error);
         return null;
     }
-}
+};
 
 export const fetchSuggestions = async (endpoint) => {
     try {
         const response = await fetch(getApiUrl(`/${endpoint}`), {
             method: "GET",
-            headers: {
-                "x-api-key": apiKey,
-                "Content-Type": "application/json"
-            },
-            credentials: 'include'
+            headers: createHeaders(),
         });
-
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         const data = await response.json();
-
         return data;
-
     } catch (error) {
         console.error("Error fetching suggestions:", error);
         return [];
@@ -384,23 +342,18 @@ export const fetchSuggestions = async (endpoint) => {
 export const getRequest = async (endpoint) => {
     try {
         const headers = createHeaders();
-        
         const response = await fetch(getApiUrl(`/${endpoint}`), {
             method: "GET",
             headers: headers,
-            credentials: 'include'
         });
-
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
         }
-
         const data = await response.json();
         return data;
-
     } catch (error) {
         console.error("Failed to fetch data:", error);
         throw error;
     }
-}
+};
