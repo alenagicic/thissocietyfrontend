@@ -1,6 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../Context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { apiCall } from '../Utils/api';
 
 export default function Header() {
@@ -44,7 +44,6 @@ export default function Header() {
       document.addEventListener('mousedown', handleClickOutside);
     }
 
-    // Clean up the event listener when the component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };

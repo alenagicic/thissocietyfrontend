@@ -58,5 +58,7 @@ body.no-scroll {
         z-index: 100;
         padding-top: 0.4rem;
         padding-bottom: 0.3rem;
+        display: flex;
+        align-items: center;
     }
 }
