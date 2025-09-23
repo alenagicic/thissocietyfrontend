@@ -1,8 +1,10 @@
 .tiptap-container {
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: auto;
+  overflow-x: hidden;
   background-color: white;
+  position: relative;
 }
 
 .tiptap-toolbar {

@@ -76,7 +76,7 @@ export default function TiptapEditor({ content, onContentChange, nextElementRef 
 
     return (
         <div className="tiptap-container">
-            <TiptapToolbar editor={editor} />
+            <TiptapToolbar className="tiptap-bar" editor={editor} />
             <EditorContent 
                 tabIndex={4} 
                 editor={editor} 
