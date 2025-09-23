@@ -56,7 +56,7 @@ export default function Header() {
 
   const loggedInLinks = [
     { to: '/create', icon: 'bi-plus-circle', label: 'Create' },
-    { to: '/notifications', icon: 'bi-bell', label: 'Notifications' },
+    // { to: '/notifications', icon: 'bi-bell', label: 'Notifications' },
     { to: '/settings', icon: 'bi-gear', label: 'Settings' },
   ];
   
