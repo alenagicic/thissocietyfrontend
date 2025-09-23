@@ -10,13 +10,13 @@
   flex-direction: column;
   align-items: center;
   overflow: auto;
-  padding-top: 1rem;
   z-index: 10000;
 }
 
 .popup-content {
   margin: 2rem 0;
-  width: 80%;
+  width: 70%;
+  min-width: 70%;
   max-width: 60rem;
   display: flex;
   flex-direction: column;
@@ -39,7 +39,7 @@
 .popup-image-carousel {
   display: flex;
   gap: 0.5rem;
-  width: 100%;
+  min-width: 100%;
   align-items: center;
   justify-content: space-between;
   border-radius: 0.1rem;
@@ -150,7 +150,7 @@
   color: white;
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 2rem;
+  border-radius: 1rem;
   cursor: pointer;
   width: 15rem;
   font-size: 1.05rem;
@@ -179,8 +179,10 @@
 .popup-article__content {
   margin: 0;
   box-sizing: border-box;
-  font-family: "Lato", sans-serif;
-  letter-spacing: 0.6px;
+  font-weight: 400;
+  font-size: 19px;
+  color: rgb(54, 55, 55);
+  line-height: 1.6;
 }
 
 .popup-article__content h1,
@@ -244,11 +246,10 @@
   .popup-meta {
     display: flex;
     row-gap: 2rem;
-    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
   }
   .popup-meta .popup-meta__author {
-    margin-right: auto;
-    margin-left: auto;
     width: auto;
     border: 1px solid #2ecc71;
     background-color: #2ecc71;
@@ -262,13 +263,6 @@
   }
   .popup-meta .popup-meta__author .popup-meta__author-img-wrapper {
     border: 1px solid transparent;
-  }
-  .popup-meta .popup-meta-wrapper {
-    font-size: 0.8rem !important;
-    margin-right: auto;
-  }
-  .popup-meta .popup-meta-wrapper .popup-meta__share-btn {
-    display: none;
   }
 }
 .popup-meta__author-img-wrapper {
@@ -330,20 +324,35 @@
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  color: #555;
+  color: whitesmoke;
   box-sizing: border-box;
   min-width: 2.5rem;
   min-height: 2.5rem;
   max-height: 2.5rem;
+  border: 1px solid #2ecc71;
+  background-color: #2ecc71;
 }
 
 .popup-meta__vote-wrapper i,
 .popup-meta__vote-wrapper span {
   font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: italic;
+}
+
+.upvote-value-cntr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.2rem;
+  min-width: 2rem;
 }
 
 .popup-meta__vote-wrapper:hover {
-  color: black;
+  transition: all 0.1s ease;
+  transform: scale(1.05);
 }
 
 .popup-meta__vote-wrapper:active {
@@ -375,7 +384,7 @@
   padding-top: 0.02rem;
   display: flex;
   align-items: center;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
 }
 
 .popup-meta__share-btn:hover {

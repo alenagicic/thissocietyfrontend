@@ -11,7 +11,7 @@ import AuthProvider from './Context/AuthContext';
 import NotificationsPage from './Pages/NotificationsPage';
 import ArticleView from './Components/ArticleView';
 import ScrollProvider from './Context/ScrollContext';
-import snail from './Images/snail_silhouette.svg'
+import snail from './Images/snail-logo-green.png'
 
 function App() {
   return (

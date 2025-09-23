@@ -183,9 +183,13 @@ export default function ArticleView() {
                 <header className="popup-header">
                     <h1 className="popup-header__title">{article.heading}</h1>
                     {location.state?.modal ? (
-                        <button onClick={handleClose} className="popup-header__close-btn">Back</button>
+                        <button onClick={handleClose} className="popup-header__close-btn">
+                            Back
+                        </button>
                     ) : (
-                        <button onClick={() => navigate(-1)} className="popup-header__close-btn">Back</button>
+                        <button onClick={() => navigate(-1)} className="popup-header__close-btn">
+                            Back
+                        </button>
                     )}
                 </header>
 
@@ -211,14 +215,16 @@ export default function ArticleView() {
                         {/* <div className="popup-meta__date">
                             <i className="bi bi-clock popup-meta__date-icon"></i> {formatTimeAgo(article.created_at)}
                         </div> */}
-                        <div
+                        {/* <div
                             onClick={handleUpvote}
                             className={`popup-meta__vote-wrapper popup-meta__upvote ${hasUpvoted ? "popup-meta__vote-wrapper--active" : ""}`}
                             role="button"
                             tabIndex={0}
                         >
-                            <i className={`bi ${hasUpvoted ? "bi-arrow-up-circle-fill" : "bi-arrow-up-circle"} popup-meta__vote-icon`}></i>
-                            {localUpvotes > 0 && <span>{localUpvotes}</span>}
+                            <i className={`bi ${hasUpvoted ? "bi-caret-up-fill" : "bi-caret-up"} popup-meta__vote-icon`}></i>
+                            {localUpvotes > 0 && <span className="upvote-value-cntr">{localUpvotes}</span>}
+                            {localUpvotes == 0 && <span className="upvote-value-cntr">{0}</span>}
+
                         </div>
                         <div
                             onClick={handleDownvote}
@@ -226,10 +232,12 @@ export default function ArticleView() {
                             role="button"
                             tabIndex={0}
                         >
-                            <i className={`bi ${hasDownvoted ? "bi-arrow-down-circle-fill" : "bi-arrow-down-circle"} popup-meta__vote-icon`}></i>
-                            {localDownvotes > 0 && <span>{localDownvotes}</span>}
-                        </div>
-                        <div
+                            <i className={`bi ${hasDownvoted ? "bi-caret-down-fill" : "bi-caret-down"} popup-meta__vote-icon`}></i>
+                            {localDownvotes > 0 && <span className="upvote-value-cntr">{localDownvotes}</span>}
+                            {localDownvotes == 0 && <span className="upvote-value-cntr">{0}</span>}
+
+                        </div> */}
+                        {/* <div
                             className="popup-meta__share-btn"
                             onClick={() => handleShare(article.heading, window.location.href)}
                             style={{ cursor: "pointer" }}
@@ -237,7 +245,7 @@ export default function ArticleView() {
                             tabIndex={0}
                         >
                             <i className="bi bi-share popup-meta__share-btn-icon"></i>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 

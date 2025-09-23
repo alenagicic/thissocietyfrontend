@@ -155,7 +155,7 @@ export default function Comment({
           </div>
         </div>
       )}
-
+{/* 
       <div className="wrapper-comment-chevron">
         <div
           onClick={handleClickUp}
@@ -183,7 +183,7 @@ export default function Comment({
             {showReplies ? "Fold" : ` (${comment.Nested.length}) `}
           </p>
         )}
-      </div>
+      </div> */}
 
       {showReplies && (
         <div className="wrapper-comment-nested">

@@ -87,7 +87,7 @@ export default function IndexPage() {
           <img src={pexels} alt="" />
         </section> */}
 
-        <section className="join-us-wrapper">
+        {/* <section className="join-us-wrapper">
           <h3>
             Easy To Get Started!
           </h3>
@@ -99,7 +99,7 @@ export default function IndexPage() {
               Get started
             </div>
           </Link>
-        </section>
+        </section> */}
       </main>
     </>
   );

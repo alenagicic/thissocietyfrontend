@@ -48,12 +48,12 @@ export default function ArticleCard({ article }) {
 
                 <div className='content-stats-thumbs content-stats-mini'>
 
-                    <div className="wrapper-upvote">
+                    {/* <div className="wrapper-upvote">
                         <p>
                             <i className="bi bi-fire"></i>
                             {article.UpvoteCount}
                         </p>
-                    </div>
+                    </div> */}
 
                     <p className="wrapper-upvote">
                         <i className="bi bi-chat-dots-fill"></i>

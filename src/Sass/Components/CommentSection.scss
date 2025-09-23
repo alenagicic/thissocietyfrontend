@@ -93,7 +93,7 @@
 
             textarea {
                 width: 100%;
-                min-height: 3.3rem;
+                min-height: 5rem;
                 resize: none;
                 overflow: hidden;
                 padding: 0.3rem 0.3rem 0.3rem 0.3rem;
@@ -103,7 +103,7 @@
                 font-family: inherit;
                 border: 1px solid #ddd;
                 background-color: transparent;
-                border-radius: 1rem;
+                border-radius: 0.5rem;
                 outline: 2px solid transparent;
                 outline-offset: 0.2rem;
 
@@ -177,8 +177,9 @@
             flex-direction: column;
             border-radius: 0.1rem;
             box-sizing: border-box;
-            row-gap: 0.5rem;
             margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
 
             .wrapper-commentbox {
               
@@ -303,10 +304,13 @@
             }
 
             .wrapper-actual-topic {
-                background-color: transparent;
-                padding-left: 3.4rem;
+                margin-left: 3.32rem;
+                padding: 1rem;
                 font-size: 0.95rem;
                 letter-spacing: 0.5px;
+                border: 1px solid #c6c6c6;
+                border-radius: 1rem;
+                background-color: #ececec;
             }
 
             .wrapper-comment-chevron {

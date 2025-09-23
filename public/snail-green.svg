@@ -1,0 +1,14 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-labelledby="titleDesc" shape-rendering="geometricPrecision">
+  <title id="titleDesc">Snail app logo — round green background with vertically balanced S</title>
+
+  <!-- Round green background -->
+  <circle cx="256" cy="256" r="256" fill="#2ecc71"></circle>
+
+  <!-- Adjusted upward, smoothed S stroke -->
+  <path d="M340 100
+       C250 50, 140 110, 200 190
+       C250 250, 330 230, 310 300
+       C290 360, 210 350, 220 410
+       C230 450, 270 450, 280 420" fill="none" stroke="#ffffff" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" transform="rotate(12,256,256)"></path>
+</svg>
