@@ -232,7 +232,7 @@
   display: flex;
   align-items: center;
   font-size: 1rem;
-  color: #444;
+  color: #333;
   gap: 0.8rem;
 }
 
@@ -268,7 +268,8 @@
   cursor: pointer;
   font-size: 1rem;
   text-decoration: none;
-  color: #555;
+  color: #333;
+  font-weight: 600;
 }
 
 .popup-meta__author-name:hover {
