@@ -180,7 +180,7 @@
   margin: 0;
   box-sizing: border-box;
   font-weight: 400;
-  font-size: 19px;
+  font-size: 16px;
   color: rgb(54, 55, 55);
   line-height: 1.6;
 }
@@ -242,29 +242,6 @@
   align-items: center;
 }
 
-@media screen and (max-width: 680px) {
-  .popup-meta {
-    display: flex;
-    row-gap: 2rem;
-    justify-content: center;
-    align-items: center;
-  }
-  .popup-meta .popup-meta__author {
-    width: auto;
-    border: 1px solid #2ecc71;
-    background-color: #2ecc71;
-    padding: 0.5rem;
-    padding-right: 1rem;
-    border-radius: 1rem;
-    font-weight: 600;
-  }
-  .popup-meta .popup-meta__author .popup-meta__author-name {
-    color: white;
-  }
-  .popup-meta .popup-meta__author .popup-meta__author-img-wrapper {
-    border: 1px solid transparent;
-  }
-}
 .popup-meta__author-img-wrapper {
   height: 2.5rem;
   width: 2.5rem;
