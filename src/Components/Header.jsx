@@ -4,99 +4,108 @@ import { AuthContext } from '../Context/AuthContext';
 import { apiCall } from '../Utils/api';
 
 export default function Header() {
-  const { user, logout } = useContext(AuthContext);
-  const [isNavVisible, setIsNavVisible] = useState(false);
-  const userLoggedIn = !!user;
-  const headerRef = useRef(null);
+    const { user, logout } = useContext(AuthContext);
+    const [isNavVisible, setIsNavVisible] = useState(false);
+    const userLoggedIn = !!user;
+    const navRef = useRef(null);
+    const toggleButtonRef = useRef(null);
 
-  const toggleNavbar = () => {
-    setIsNavVisible(prev => !prev);
-  };
+    const toggleNavbar = () => {
+        setIsNavVisible(prev => !prev);
+    };
 
-  const handleAction = async (actionType) => {
-    if (actionType === 'signout') {
-      try {
-        await apiCall('/account/signout', 'POST');
-        logout();
-      } catch (error) {
-        console.error('Error signing out:', error.message || error);
-      }
-    } else {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
-    
-    setIsNavVisible(false);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Check if the click is outside the header's div.
-      // The toggle button is outside, so we also need to check its parent.
-      if (headerRef.current && !headerRef.current.contains(event.target) && !event.target.closest('.header-toggler')) {
+    const handleAction = async (actionType) => {
+        if (actionType === 'signout') {
+            try {
+                await apiCall('/account/signout', 'POST');
+                logout();
+            } catch (error) {
+                console.error('Error signing out:', error.message || error);
+            }
+        } else {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+        }
+        
         setIsNavVisible(false);
-      }
     };
 
-    if (isNavVisible) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (navRef.current && !navRef.current.contains(event.target) && toggleButtonRef.current && !toggleButtonRef.current.contains(event.target)) {
+                setIsNavVisible(false);
+            }
+        };
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isNavVisible]);
+        if (isNavVisible) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
 
-  const navLinks = [
-    { to: '/', icon: 'bi-house', label: 'Home' },
-    { to: '/content/main/latest', icon: 'bi-layout-text-window-reverse', label: 'Content' },
-  ];
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isNavVisible]);
 
-  const loggedInLinks = [
-    { to: '/create', icon: 'bi-plus-circle', label: 'Create' },
-    // { to: '/notifications', icon: 'bi-bell', label: 'Notifications' },
-    { to: '/settings', icon: 'bi-gear', label: 'Settings' },
-  ];
-  
-  return (
-    <div className="wrapper-header" ref={headerRef}>
-      {/* Toggle button */}
-      <button className={`header-toggler ${isNavVisible ? 'left' : ''}`} onClick={toggleNavbar}>
-        <i className={`bi ${isNavVisible ? 'bi-x-lg' : 'bi-list'}`}></i>
-      </button>
+    const navLinks = [
+        { to: '/', icon: 'bi-house', label: 'Home', tooltip: 'Home' },
+        { to: '/content/main/latest', icon: 'bi-layout-text-window-reverse', label: 'Content', tooltip: 'Content' },
+    ];
 
-      <div className={`wrapper-header-nav ${isNavVisible ? 'is-visible' : ''}`}>
-        {navLinks.map((link) => (
-          <Link key={link.to} to={link.to} onClick={() => handleAction('link')}>
-            <button aria-label={link.label}>
-              <i className={`${link.icon} text-lg`}></i>
+    const loggedInLinks = [
+        { to: '/create', icon: 'bi-plus-circle', label: 'Create', tooltip: 'Create' },
+        { to: '/notifications', icon: 'bi-bell', label: 'Notifications', tooltip: 'Notifications' },
+        { to: '/settings', icon: 'bi-gear', label: 'Settings', tooltip: 'Settings' },
+    ];
+    
+    return (
+        <>
+            <button
+                className="header-toggler"
+                onClick={toggleNavbar}
+                ref={toggleButtonRef}
+                title={isNavVisible ? 'Close Menu' : 'Open Menu'}
+            >
+                <i className={`bi ${isNavVisible ? 'bi-x-lg' : 'bi-list'}`}></i>
             </button>
-          </Link>
-        ))}
 
-        {userLoggedIn ? (
-          <>
-            {loggedInLinks.map((link) => (
-              <Link key={link.to} to={link.to} onClick={() => handleAction('link')}>
-                <button aria-label={link.label}>
-                  <i className={`${link.icon} text-lg`}></i>
-                </button>
-              </Link>
-            ))}
-            <button onClick={() => handleAction('signout')} aria-label="Sign out">
-              <i className="bi-box-arrow-in-left text-lg"></i>
-            </button>
-          </>
-        ) : (
-          <Link to="/auth" onClick={() => handleAction('link')}>
-            <button aria-label="Sign in">
-              <i className="bi-box-arrow-in-right text-lg"></i>
-            </button>
-          </Link>
-        )}
-      </div>
-    </div>
-  );
+            <div className={`wrapper-header-nav ${isNavVisible ? 'is-visible' : ''}`} ref={navRef}>
+                {navLinks.map((link) => (
+                    <Link className='link-element' key={link.to} to={link.to} onClick={() => handleAction('link')}>
+                        <button aria-label={link.label}>
+                            <i className={`${link.icon} text-lg`}></i>
+                            <span className="tooltip">{link.tooltip}</span>
+                        </button>
+                    </Link>
+                ))}
+
+                {userLoggedIn ? (
+                    <>
+                        {loggedInLinks.map((link) => (
+                            <Link className='link-element' key={link.to} to={link.to} onClick={() => handleAction('link')}>
+                                <button aria-label={link.label}>
+                                    <i className={`${link.icon} text-lg`}></i>
+                                    <span className="tooltip">{link.tooltip}</span>
+                                </button>
+                            </Link>
+                        ))}
+                        <Link className='link-element' to="#" onClick={() => handleAction('signout')}>
+                            <button aria-label="Sign out">
+                                <i className="bi-box-arrow-in-left text-lg"></i>
+                                <span className="tooltip">Sign out</span>
+                            </button>
+                        </Link>
+                    </>
+                ) : (
+                    <Link className='link-element' to="/auth" onClick={() => handleAction('link')}>
+                        <button aria-label="Sign in">
+                            <i className="bi-box-arrow-in-right text-lg"></i>
+                            <span className="tooltip">Sign in</span>
+                        </button>
+                    </Link>
+                )}
+            </div>
+        </>
+    );
 }

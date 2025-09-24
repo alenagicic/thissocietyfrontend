@@ -106,7 +106,7 @@ export default function CommentSection({ article }) {
                     onClick={() => setShowIconPicker(true)} 
                     aria-label="Open emoji picker"
                 >
-                    <i className="bi bi-emoji-smile"></i>
+                    Icons
                 </p>
                 <p onClick={() => handleSendTopLevelComment()} className="btn-submit btn-submit-send">
                     Send
@@ -120,7 +120,7 @@ export default function CommentSection({ article }) {
                         handleCloseIconPicker();
                     }}
                     onClose={handleCloseIconPicker}
-                    ref={iconPickerRef} // Pass the ref to the IconPicker component
+                    ref={iconPickerRef}
                 />
             )}
 

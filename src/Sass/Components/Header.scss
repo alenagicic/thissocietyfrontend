@@ -1,133 +1,124 @@
-.wrapper-header {
+/* A much more explicit and safer way to style links */
+
+.header-toggler {
+    position: fixed;
+    top: 0.3rem;
+    left: 0.7rem;
+    width: 2.5rem;
+    height: 2.5rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 1001;
+    border-radius: 50%;
+    color: white;
+    border: 1px solid #ddd;
+    background-color: transparent;
+    outline: 1px solid transparent;
+
+    i {
+        font-size: 1.8rem;
+        color: #2ecc71;
+        padding-top: 0.1rem;
+        padding-left: 0.02rem;
+    }
+}
+
+.header-toggler:hover {
+    outline: 1px solid #2ecc71;
+    outline-offset: 0.2rem;
+    transition-duration: 0.2s;
+}
+
+.wrapper-header-nav {
+    display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    position: fixed;
-    top: 4rem;
-    left: 0;
-    padding-left: 1rem;
+    row-gap: 2rem;
     height: 100vh;
     box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: 1000;
+    visibility: hidden;
+    background-color: whitesmoke;
+    border-right: 1px solid #ddd;
+    transform: translateX(-150%);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    justify-content: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 
-    .link-logo {
-        color: #2ecc71;
+    &.is-visible {
+        visibility: visible;
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    /* Style both Link and button consistently */
+    .link-element {
         text-decoration: none;
-
-        &:active {
-            transition: 0.1s all ease;
-            transform: scale(0.95);
-        }
-    }
-
-    h4 {
-        margin-right: auto;
-    }
-
-    .header-toggler {
-        position: absolute;
-        top: 2.5rem;
-        left: 1rem;
-        width: 3rem;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
+        color: inherit;
         background-color: transparent;
+        border: none;
         cursor: pointer;
-        z-index: 1000;
-        top: 42%;
-        transform: translateY(-50%);
-        border-radius: 50%;
-        color: white;
-        border: 1px solid #2ecc71;
-        background-color: #2ecc71;
-
-        &:hover {
-            transition: all 0.3s ease;
-            transform: translateY(-50%) scale(1.05); 
-            border: 1px solid #2ecc71;
-        }
-
-        i {
-            font-size: 1.8rem;
-            transition: transform 0.2s ease;
-            padding-top: 0.1rem;
-            padding-left: 0.03rem;
-        }
-    }
-
-    .header-toggler.left{
-        left: 0.725rem;
-        width: 2rem;
-        height: 2rem;
-        border: 1px solid #ddd;
         display: flex;
-        justify-content: center;
         align-items: center;
-        border-radius: 50%;
-        top: 4.5rem;
-        background-color: #e57373;
-        display: none;
-
-        i{
-            font-size: 1rem!important;
-            color: white;
-        }
+        width: auto;
+        padding: 0;
+        margin: 0;
+        position: relative; /* ONLY on the Link element */
     }
 
-    .wrapper-header-nav {
+    .link-element button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
         display: flex;
-        flex-direction: column;
-        row-gap: 2rem;
-        transition: transform 0.3s ease-out;
-        transform: translateX(-150%);
-        margin-top: 1rem;
-        z-index: 1000;
-        
-        &.is-visible {
-            transform: translateX(0);
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        button {
-            display: flex;
-            align-items: center;
-            column-gap: 0.5rem;
-            text-decoration: none;
-            border: none;
-            background-color: transparent;
-            font-size: 1rem;
-            padding-right: 1rem;
-            cursor: pointer;
-
-            i {
-                font-size: 1.4rem;
-                min-height: 2.8rem;
-                min-width: 2.8rem;
-                border-radius: 50%;
-                border: 1px solid #2ecc71;
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: background-color 0.2s ease, transform 0.2s ease;
-                background-color: #2ecc71;
-            }
-
-            &:hover {
-                i {
-                    transform: scale(1.1);
-                }
-            }
-        }
+        align-items: center;
+        width: auto;
+        padding: 0;
+        margin: 0;
     }
-    
+
+    i {
+        font-size: 1.4rem;
+        min-height: 2.8rem;
+        min-width: 2.8rem;
+        border-radius: 50%;
+        border: 1px solid #2ecc71;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+        background-color: #2ecc71;
+    }
+
+    .tooltip {
+        position: absolute;
+        left: 3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #333;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.1s ease-in, visibility 0s linear 0.1s;
+        z-index: 10;
+    }
+
+    .link-element:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0s;
+    }
 }

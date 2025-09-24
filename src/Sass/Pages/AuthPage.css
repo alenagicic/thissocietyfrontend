@@ -6,6 +6,7 @@
   padding-right: 0.2rem;
   display: flex;
   flex-direction: column;
+  max-width: 60%;
 }
 .wrapper-login .text-danger {
   margin: 0;
@@ -164,4 +165,10 @@
 }
 .wrapper-login .socials-signup:active {
   transform: scale(0.99);
+}
+
+@media screen and (max-width: 820px) {
+  .wrapper-login {
+    max-width: 80%;
+  }
 }

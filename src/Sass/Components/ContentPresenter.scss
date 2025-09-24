@@ -12,11 +12,21 @@
         padding: 0.5rem;
         padding-left: 1rem;
         padding-right: 1rem;
-        border-radius: 1rem;
         z-index: 100;
+        border-radius: 0.2rem;
         text-transform: capitalize;
         max-width: 15rem;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    @media screen and (max-width: 520px){
+        .author-title{
+            font-size: 0.8rem;      
+            border-top-left-radius: 0rem;
+            border-bottom-left-radius: 0rem; 
+            left: 0px!important;      
+            max-width: 12rem;
+        }
     }
 }

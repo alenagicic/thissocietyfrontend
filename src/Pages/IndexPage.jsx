@@ -55,7 +55,7 @@ export default function IndexPage() {
             Your place for mindful publishing.
           </h3>
           <p>
-            Planetarium.com is an open publishing platform where anyone can join and share their voice. Simply sign up with your email and password to start writing articles that contribute to the collective stream of content.
+            Slowreads.se is an open publishing platform where anyone can join and share their voice. Simply sign up with your email and password to start contributing. Write articles that contribute to the collective stream of content.
           </p>
           <p>
             You can explore a wide range of topics and engage with the community.

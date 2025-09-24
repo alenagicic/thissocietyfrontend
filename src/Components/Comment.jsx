@@ -21,7 +21,7 @@ export default function Comment({
   const [showReplies, setShowReplies] = useState(false);
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [showIconPicker, setShowIconPicker] = useState(false);
-  
+
   const textareaRef = useRef(null);
   const actualCommentRef = useRef(null);
   const commentBoxRef = useRef(null);
@@ -46,10 +46,17 @@ export default function Comment({
     const handleClickOutside = (event) => {
       const isClickInsideCommentBox = commentBoxRef.current && commentBoxRef.current.contains(event.target);
       const isClickInsideIconPicker = iconPickerRef.current && iconPickerRef.current.contains(event.target);
-      
-      if (!isClickInsideCommentBox && !isClickInsideIconPicker) {
+      const isEmojiButton = event.target.closest('.btn-submit-send');
+
+      if (!isClickInsideCommentBox && !isClickInsideIconPicker && !isEmojiButton) {
         setShowCommentBox(false);
+        setShowIconPicker(false);
       }
+      
+      if (isClickInsideCommentBox && !isClickInsideIconPicker) {
+        setShowIconPicker(false);
+      }
+
     };
 
     if (showCommentBox) {
@@ -86,7 +93,7 @@ export default function Comment({
     if (textareaRef.current) {
       const { selectionStart, selectionEnd, value } = textareaRef.current;
       const newValue = value.slice(0, selectionStart) + icon + value.slice(selectionEnd);
-      
+
       textareaRef.current.value = newValue;
 
       const newCursorPos = selectionStart + icon.length;
@@ -94,6 +101,7 @@ export default function Comment({
       textareaRef.current.setSelectionRange(newCursorPos, newCursorPos);
       autoGrow(textareaRef.current);
     }
+    setShowIconPicker(false);
   };
 
   const handleSendReply = () => {
@@ -102,7 +110,6 @@ export default function Comment({
         commentText: textareaRef.current.value.trim(),
         parentId: comment.Id
       });
-      
       textareaRef.current.value = "";
       setShowCommentBox(false);
       setShowReplies(true);
@@ -113,15 +120,12 @@ export default function Comment({
     <div ref={actualCommentRef} className="wrapper-comment">
       <div className="wrapper-comment-username">
         <img src={comment.image || image} alt="User" />
-
         <Link className="link-username-comment" to={`/content/author/${comment.UsernamePrimary}`}>
           <h4>@{comment.Username}</h4>
         </Link>
-
         <i className="bi bi-calendar"></i>
         <span>{formatTimeAgo(comment.Date)}</span>
       </div>
-
       <p className="wrapper-actual-topic">{comment.Comment}</p>
 
       {showCommentBox && (
@@ -129,7 +133,6 @@ export default function Comment({
           <p className="commentbox-reply-to">
             Replying to: {comment.Username}
           </p>
-
           <div className="wrapper-commentbox-tools">
             <textarea
               rows={1}
@@ -139,23 +142,23 @@ export default function Comment({
               name="commentbox"
               id={`commentbox-${comment.Id}`}
             />
-
-            <p className="btn-submit btn-submit-send send-btn" onClick={handleSendReply}>
+            <p className="btn-submit-send" onClick={handleSendReply}>
               Send
             </p>
-
-            {/* <p
-              onClick={() => setShowIconPicker(true)}
-              className="btn-submit btn-submit-send btn-icons"
+            <p
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowIconPicker(prev => !prev);
+              }}
+              className="btn-submit-send"
               aria-label="Open emoji picker"
             >
-              <i className="bi bi-emoji-smile"></i>
-            </p> */}
-        
+              Icons
+            </p>
           </div>
         </div>
       )}
-{/* 
+
       <div className="wrapper-comment-chevron">
         <div
           onClick={handleClickUp}
@@ -167,23 +170,21 @@ export default function Comment({
           <i className={`bi ${isUpvoted ? "bi-arrow-up-circle-fill" : "bi-arrow-up-circle"}`}></i>
           {thumbup > 0 && <p>{thumbup}</p>}
         </div>
-
         {user !== null && (
           <p className="icon-button wrapper-upvotes fold-unfold-btn" onClick={() => setShowCommentBox(prev => !prev)}>
             <i className="bi bi-chat-dots"></i>
-            Comment
+            Reply
           </p>
         )}
-
         {comment.Nested?.length > 0 && (
           <p
-            className={`fold-unfold-primary icon-button fold-unfold-btn bi ${showReplies ? "bi-arrow-up-circle" : "bi-arrow-down-circle"}`}
             onClick={() => setShowReplies(prev => !prev)}
+            className="wrapper-upvotes"
           >
-            {showReplies ? "Fold" : ` (${comment.Nested.length}) `}
+            {showReplies ? "Fold" : `More (${comment.Nested.length}) `}
           </p>
         )}
-      </div> */}
+      </div>
 
       {showReplies && (
         <div className="wrapper-comment-nested">
@@ -201,11 +202,11 @@ export default function Comment({
           ))}
         </div>
       )}
-      
+
       {showIconPicker && (
-        <IconPicker 
-          onSelect={handleIconSelect} 
-          onClose={() => setShowIconPicker(false)} 
+        <IconPicker
+          onSelect={handleIconSelect}
+          onClose={() => setShowIconPicker(false)}
           ref={iconPickerRef}
         />
       )}
