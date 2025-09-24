@@ -17,6 +17,7 @@
   border: 1px solid #ddd;
   background-color: transparent;
   outline: 1px solid transparent;
+  background-color: whitesmoke;
 }
 .header-toggler i {
   font-size: 1.8rem;
