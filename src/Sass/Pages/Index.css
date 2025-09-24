@@ -6,6 +6,8 @@
   align-items: center;
   justify-content: center;
   padding-top: 5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 .wrapper-index section {
   width: 100%;

@@ -9,6 +9,8 @@
   margin-left: auto;
   margin-right: auto;
   justify-content: flex-start;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 .pages-wrapper h3:first-of-type {
   margin-bottom: 2rem;

@@ -18,9 +18,11 @@ function App() {
     <Router>
       <div className='wrapper-app'>
         <div className='logo-place' style={{zIndex: "1000"}}>
+
           <h2 onClick={() => window.location.href = window.location.origin}>
             Slowreads
           </h2>
+          
         </div>
         <AuthProvider>
           <ScrollProvider>

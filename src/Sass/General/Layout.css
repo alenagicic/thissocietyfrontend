@@ -7,7 +7,6 @@
 
 body {
   background-color: whitesmoke;
-  padding: 1rem;
   padding-top: 0rem;
 }
 
@@ -46,20 +45,22 @@ body.no-scroll {
   padding: 0px;
   color: #2ecc71;
   border-bottom: 1px solid #ddd;
-  width: 100%;
   position: fixed;
   top: 0px;
   background-color: whitesmoke;
   z-index: 100;
+  width: 99.9%;
+  box-sizing: border-box;
 }
 .logo-place h2 {
   margin: 0px;
   padding: 0px;
   z-index: 100;
-  padding-top: 0.4rem;
+  padding-top: 0.45rem;
   padding-bottom: 0.3rem;
   display: flex;
   align-items: center;
-  padding-left: 3rem;
+  padding-left: 3.9rem;
   cursor: pointer;
+  box-sizing: border-box;
 }
