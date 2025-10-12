@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { fetchArticles } from "../Utils/api";
 import { adaptArticles } from '../Utils/helpers';
 import { Link } from "react-router-dom";
-import pexels from "../Images/Pexels_logo.svg";
 
 export default function IndexPage() {
   const [articles, setArticles] = useState([]);
@@ -70,36 +69,6 @@ export default function IndexPage() {
             </div>
           </Link>
         </section>
-
-        {/* <section className="wrapper-pexels-idx join-us-wrapper">
-          <div>
-            <h2>
-              Powered by the Pexels API.
-            </h2>
-            <h4>
-              Start publishing with your own images or use the <u>integrated pexels api</u> to add vibrant and colorful images to your articles.
-            </h4>
-            <p>
-              There are no limits to the ammount of images that you can upload.
-            </p>
-          </div>
-
-          <img src={pexels} alt="" />
-        </section> */}
-
-        {/* <section className="join-us-wrapper">
-          <h3>
-            Easy To Get Started!
-          </h3>
-          <p>
-            Setting up an account and starting to publish is very easy. Email and password and you are there!
-          </p>
-          <Link onClick={handleLinkClick} to={"/auth"} className="link-removelink">
-            <div className="signup-index">
-              Get started
-            </div>
-          </Link>
-        </section> */}
       </main>
     </>
   );

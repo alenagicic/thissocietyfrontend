@@ -9,7 +9,6 @@ export default function Latest() {
                   className='wrapper-index-link'
                   key={item.Id}
                 >
-                  {/* Conditionally render image only if valid */}
                   {item.ImagePlaceholder && item.ImagePlaceholder !== "/Images/logo192.png" ? (
                     <div className="img-index-link">
                       <img src={item.ImagePlaceholder} alt={item.TopicName} />

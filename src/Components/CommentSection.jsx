@@ -45,7 +45,6 @@ export default function CommentSection({ article }) {
         setShowIconPicker(false);
     };
 
-    // The useEffect hook should be here, managing the event listener for the document
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (iconPickerRef.current && !iconPickerRef.current.contains(event.target)) {

@@ -1,5 +1,3 @@
-/* A much more explicit and safer way to style links */
-
 .header-toggler {
     position: fixed;
     top: 0.3rem;
@@ -60,7 +58,6 @@
         opacity: 1;
     }
 
-    /* Style both Link and button consistently */
     .link-element {
         text-decoration: none;
         color: inherit;
@@ -72,7 +69,7 @@
         width: auto;
         padding: 0;
         margin: 0;
-        position: relative; /* ONLY on the Link element */
+        position: relative;
     }
 
     .link-element button {

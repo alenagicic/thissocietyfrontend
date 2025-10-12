@@ -28,25 +28,21 @@ function App() {
           <ScrollProvider>
           <Header/>
           <Routes>
-            {/* Landingpage */}
+
             <Route path="/" element={<IndexPage />} />
 
-            {/* For Contentpage */}
             <Route path="/content/:filterType?/:filterValue?" element={<ContentPage />}>
               <Route path=":articleId" element={<ArticleView />} />
             </Route>
 
-            {/* Settingspage */}
             <Route path='/settings' element={<SettingsPage />}>
               <Route path=':articleId' element={<ArticleView/>} />
             </Route>
 
-            {/* Notifications */}
             <Route path='/notifications' element={<NotificationsPage/>}/>
               <Route path=':articleId' element={<ArticleView />} />
             <Route/>
 
-            {/* Other pages */}
             <Route path='/create' element={<CreatePage />} />
             <Route path='/auth' element={<AuthPage/>}/>
             
