@@ -3,8 +3,8 @@
 Live demo:
     🌐 www.slowreads.se
 
-Test credentials:
-    📧 alenagicic@gmail.com
+Test credentials:  
+    📧 alenagicic@gmail.com  
     🔐 Verysecurepassword123!
 
 ✨ Overview
