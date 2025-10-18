@@ -56,12 +56,16 @@ body.no-scroll {
         margin: 0px;
         padding: 0px;
         z-index: 100;
-        padding-top: 0.45rem;
-        padding-bottom: 0.3rem;
         display: flex;
         align-items: center;
         padding-left: 3.9rem;
         cursor: pointer;
         box-sizing: border-box;
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        letter-spacing: 1.4px;
+        color: #333;
+        padding-top: 0.5rem;
+        padding-bottom: 0.6rem;
     }
 }
